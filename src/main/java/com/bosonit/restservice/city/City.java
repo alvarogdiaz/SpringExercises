@@ -1,4 +1,4 @@
-package com.example.restservice.city;
+package com.bosonit.restservice.city;
 
 public class City {
     private String name;

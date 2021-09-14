@@ -1,4 +1,4 @@
-package com.example.restservice.person;
+package com.bosonit.restservice.person;
 
 import org.springframework.stereotype.Service;
 

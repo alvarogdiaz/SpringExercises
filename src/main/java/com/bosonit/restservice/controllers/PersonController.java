@@ -1,7 +1,7 @@
-package com.example.restservice.controllers;
+package com.bosonit.restservice.controllers;
 
-import com.example.restservice.person.Person;
-import com.example.restservice.person.PersonService;
+import com.bosonit.restservice.person.PersonService;
+import com.bosonit.restservice.person.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

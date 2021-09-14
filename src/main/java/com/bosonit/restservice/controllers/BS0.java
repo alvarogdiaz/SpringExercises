@@ -1,6 +1,6 @@
-package com.example.restservice.controllers;
+package com.bosonit.restservice.controllers;
 
-import com.example.restservice.person.Person;
+import com.bosonit.restservice.person.Person;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

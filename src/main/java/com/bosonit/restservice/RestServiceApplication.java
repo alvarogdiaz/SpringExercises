@@ -1,6 +1,6 @@
-package com.example.restservice;
+package com.bosonit.restservice;
 
-import com.example.restservice.person.Person;
+import com.bosonit.restservice.person.Person;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package com.example.restservice.city;
+package com.bosonit.restservice.city;
 
 import java.util.Collection;
 
