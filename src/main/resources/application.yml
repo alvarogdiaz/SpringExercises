@@ -1,0 +1,8 @@
+VAR1: CONTENIDO DE VALOR1
+My.VAR2: 100
+var4:
+ try1: 200
+ try2: 400
+javaDir: ${java.home:"NO JAVA"}
+url: localhost
+password: qwerty

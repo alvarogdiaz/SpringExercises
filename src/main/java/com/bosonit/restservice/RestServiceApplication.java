@@ -1,9 +1,11 @@
 package com.bosonit.restservice;
 
 import com.bosonit.restservice.person.Person;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 @SpringBootApplication
 public class RestServiceApplication {
@@ -11,6 +13,17 @@ public class RestServiceApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(RestServiceApplication.class, args);
+	}
+
+	@Bean
+	@Profile("perfil")
+	public CommandLineRunner tryProfile() {
+		return p -> {
+			System.out.println("PERFIL");
+			for(String s : p) {
+				System.out.println("ARGS: " + s);
+			}
+		};
 	}
 
 	@Bean(name = "bean1")

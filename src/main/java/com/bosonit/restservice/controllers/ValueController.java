@@ -13,17 +13,27 @@ public class ValueController {
     private String var1;
     @Value("${My.VAR2}")
     private int var2;
+    @Value("${var4.try1}")
+    private int try1;
+    @Value("${var4.try2}")
+    private int try2;
     @Value("${var3:var3 no tiene valor}")
     private String var3;
 
     @GetMapping("/valores")
     public ResponseEntity<String> getValues() {
         return new ResponseEntity<String>("valor de var1 es: " + var1 +
-                                                " valor de my.var2 es: " + var2, HttpStatus.OK);
+                " valor de my.var2 es: " + var2, HttpStatus.OK);
+    }
+
+    @GetMapping("/valores2")
+    public ResponseEntity<String> getValues2() {
+        return new ResponseEntity<String>("valor de var1 es: " + try1 +
+                " valor de my.var2 es: " + try2, HttpStatus.OK);
     }
 
     @GetMapping("/var3")
     public ResponseEntity<String> getVar3() {
-        return new ResponseEntity<String>("valor de var3 es: " + var3, HttpStatus.OK);
+        return new ResponseEntity<String>("valor de var3 es: " + var3 + " " + System.getenv("var3"), HttpStatus.OK);
     }
 }
