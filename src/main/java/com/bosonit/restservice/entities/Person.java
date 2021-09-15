@@ -1,4 +1,4 @@
-package com.bosonit.restservice.person;
+package com.bosonit.restservice.entities;
 
 import org.springframework.stereotype.Component;
 

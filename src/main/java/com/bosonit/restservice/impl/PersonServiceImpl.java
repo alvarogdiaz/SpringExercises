@@ -1,5 +1,7 @@
-package com.bosonit.restservice.person;
+package com.bosonit.restservice.impl;
 
+import com.bosonit.restservice.entities.Person;
+import com.bosonit.restservice.interfaces.IPersonService;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -10,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
-public class PersonServiceImpl implements PersonService {
+public class PersonServiceImpl implements IPersonService {
     private static Map<Integer, Person> people = new HashMap<>();
     private final AtomicInteger counter = new AtomicInteger();
 

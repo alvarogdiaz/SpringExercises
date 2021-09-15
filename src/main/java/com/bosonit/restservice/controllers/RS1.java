@@ -1,9 +1,9 @@
 package com.bosonit.restservice.controllers;
 
-import com.bosonit.restservice.city.City;
-import com.bosonit.restservice.city.CityServiceImpl;
-import com.bosonit.restservice.person.Person;
-import com.bosonit.restservice.person.PersonService;
+import com.bosonit.restservice.entities.City;
+import com.bosonit.restservice.impl.CityServiceImpl;
+import com.bosonit.restservice.entities.Person;
+import com.bosonit.restservice.interfaces.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class RS1 {
 
     @Autowired
-    PersonService personService;
+    IPersonService personService;
 
     CityServiceImpl cityService;
 
@@ -37,7 +37,7 @@ public class RS1 {
 
     @RequestMapping(value = "/city/{id}", method = RequestMethod.GET)
     public ResponseEntity<City> getCity(@PathVariable String id) {
-        if(cityService.exists(id)) {
+        if(cityService.existsCity(id)) {
             return new ResponseEntity<City>(cityService.getCity(id), HttpStatus.OK);
         }
 
@@ -49,7 +49,7 @@ public class RS1 {
     public ResponseEntity<HttpStatus> addCity(@RequestParam(name = "name") String name,
                                               @RequestParam(name = "population") int population) {
 
-        if(!cityService.exists(name)) {
+        if(!cityService.existsCity(name)) {
             cityService.addCity(name, population);
             return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
         }

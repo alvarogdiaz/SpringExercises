@@ -1,11 +1,12 @@
 package com.bosonit.restservice.profile;
 
+import com.bosonit.restservice.interfaces.IProfiles;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
 @Profile("perfil1")
-public class Perfil1 implements IPerfiles {
+public class Perfil1 implements IProfiles {
 
     private final String perfil = "perfil1";
 

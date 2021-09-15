@@ -1,7 +1,7 @@
 package com.bosonit.restservice.controllers;
 
-import com.bosonit.restservice.city.CityServiceImpl;
-import com.bosonit.restservice.person.Person;
+import com.bosonit.restservice.impl.CityServiceImpl;
+import com.bosonit.restservice.entities.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -35,7 +35,7 @@ public class Controlador1 {
     public ResponseEntity<HttpStatus> addCity(@RequestParam(name = "name") String name,
                                               @RequestParam(name = "population") int population) {
 
-        if(!cityService.exists(name)) {
+        if(!cityService.existsCity(name)) {
             cityService.addCity(name, population);
             return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
         }

@@ -1,5 +1,6 @@
-package com.bosonit.restservice.city;
+package com.bosonit.restservice.config;
 
+import com.bosonit.restservice.impl.CityServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

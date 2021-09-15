@@ -28,8 +28,8 @@ public class ValueController {
 
     @GetMapping("/valores2")
     public ResponseEntity<String> getValues2() {
-        return new ResponseEntity<String>("valor de var1 es: " + try1 +
-                " valor de my.var2 es: " + try2, HttpStatus.OK);
+        return new ResponseEntity<String>("valor de try1 es: " + try1 +
+                " valor de try2 es: " + try2, HttpStatus.OK);
     }
 
     @GetMapping("/var3")

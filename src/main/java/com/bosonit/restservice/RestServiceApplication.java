@@ -1,6 +1,6 @@
 package com.bosonit.restservice;
 
-import com.bosonit.restservice.person.Person;
+import com.bosonit.restservice.entities.Person;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

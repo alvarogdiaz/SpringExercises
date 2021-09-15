@@ -1,7 +1,7 @@
 package com.bosonit.restservice.controllers;
 
-import com.bosonit.restservice.person.PersonService;
-import com.bosonit.restservice.person.Person;
+import com.bosonit.restservice.interfaces.IPersonService;
+import com.bosonit.restservice.entities.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import java.util.List;
 public class PersonController {
 
     @Autowired
-    PersonService personService;
+    IPersonService personService;
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<HttpStatus> addPerson(@RequestBody Person p) {

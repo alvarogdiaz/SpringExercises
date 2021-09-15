@@ -1,9 +1,11 @@
-package com.bosonit.restservice.person;
+package com.bosonit.restservice.interfaces;
+
+import com.bosonit.restservice.entities.Person;
 
 import java.util.Collection;
 import java.util.List;
 
-public interface PersonService {
+public interface IPersonService {
     void createPerson(String name, String city, int age);
     void createPerson(Person p);
     Boolean existsPerson(int id);

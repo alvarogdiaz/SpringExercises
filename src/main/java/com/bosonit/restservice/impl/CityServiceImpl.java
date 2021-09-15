@@ -1,10 +1,13 @@
-package com.bosonit.restservice.city;
+package com.bosonit.restservice.impl;
+
+import com.bosonit.restservice.entities.City;
+import com.bosonit.restservice.interfaces.ICityService;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CityServiceImpl implements CityService {
+public class CityServiceImpl implements ICityService {
     private Map<String, City> cities = new HashMap<>();
 
     @Override
@@ -18,7 +21,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public Boolean exists(String name) {
+    public Boolean existsCity(String name) {
         return cities.containsKey(name);
     }
 
