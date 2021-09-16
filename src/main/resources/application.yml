@@ -6,3 +6,4 @@ var4:
 javaDir: ${java.home:"NO JAVA"}
 url: localhost
 password: qwerty
+logging.config: src\main\resources\logback-spring.xml
