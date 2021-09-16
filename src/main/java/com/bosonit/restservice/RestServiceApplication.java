@@ -28,17 +28,17 @@ public class RestServiceApplication {
 
 	@Bean(name = "bean1")
 	public Person bean1() {
-		return new Person(0, "Manolo", "Bilbao", 42);
+		return new Person("Manolo", "Bilbao", 42, 0);
 	}
 
 	@Bean(name = "bean2")
 	public Person bean2() {
-		return new Person(0, "Lola", "Paris", 52);
+		return new Person("Lola", "Paris", 52, 0);
 	}
 
 	@Bean(name = "bean3")
 	public Person bean3() {
-		return new Person(0, "Ana", "Madrid", 27);
+		return new Person("Ana", "Madrid", 27, 0);
 	}
 
 }

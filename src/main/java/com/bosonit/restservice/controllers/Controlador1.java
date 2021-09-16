@@ -27,7 +27,7 @@ public class Controlador1 {
                                              @RequestHeader(name = "city") String city,
                                              @RequestHeader(name = "age") int age) {
 
-        p = new Person(0, name, city, age);
+        p = new Person(name, city, age, 0);
         return new ResponseEntity<Person>(p, HttpStatus.OK);
     }
 

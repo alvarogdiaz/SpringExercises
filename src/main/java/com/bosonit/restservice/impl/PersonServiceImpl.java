@@ -19,7 +19,7 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     public void createPerson(String name, String city, int age) {
         int id = counter.incrementAndGet();
-        people.put(id, new Person(id, name, city, age));
+        people.put(id, new Person(name, city, age, id));
     }
 
     @Override

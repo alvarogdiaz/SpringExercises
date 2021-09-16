@@ -15,6 +15,6 @@ public class BS0 {
     public Person person(@RequestParam(value = "name") String name,
                          @RequestParam(value = "city") String city,
                          @RequestParam(value = "age") int age) {
-        return new Person(0, name, city, age + 1);
+        return new Person(name, city, age + 1, 0);
     }
 }

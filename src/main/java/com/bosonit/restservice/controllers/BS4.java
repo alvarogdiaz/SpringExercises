@@ -1,6 +1,7 @@
 package com.bosonit.restservice.controllers;
 
 import com.bosonit.restservice.interfaces.IProfiles;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Slf4j
 public class BS4 {
 
     @Value("${url}")
@@ -25,6 +27,11 @@ public class BS4 {
 
     @GetMapping("/parametros")
     public ResponseEntity<String> getUrlPass() {
+        log.info("SOY INFO");
+        log.error("SOY ERROR");
+        log.trace("SOY TRACE");
+        log.warn("SOY WARNING");
+        log.debug("SOY DEBUG");
         return new ResponseEntity<>("url: " + url + "; pass: " + pass, HttpStatus.OK);
     }
 
