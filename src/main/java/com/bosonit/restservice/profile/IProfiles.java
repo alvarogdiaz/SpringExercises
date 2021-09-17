@@ -1,4 +1,4 @@
-package com.bosonit.restservice.interfaces;
+package com.bosonit.restservice.profile;
 
 public interface IProfiles {
     void miFuncion();

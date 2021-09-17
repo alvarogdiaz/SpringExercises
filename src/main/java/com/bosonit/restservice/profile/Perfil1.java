@@ -1,6 +1,5 @@
 package com.bosonit.restservice.profile;
 
-import com.bosonit.restservice.interfaces.IProfiles;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 

@@ -1,9 +1,9 @@
 package com.bosonit.restservice.controllers;
 
-import com.bosonit.restservice.entities.City;
-import com.bosonit.restservice.impl.CityServiceImpl;
-import com.bosonit.restservice.entities.Person;
-import com.bosonit.restservice.interfaces.IPersonService;
+import com.bosonit.restservice.domain.City;
+import com.bosonit.restservice.service.impl.CityServiceImpl;
+import com.bosonit.restservice.domain.Person;
+import com.bosonit.restservice.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
-package com.bosonit.restservice.impl;
+package com.bosonit.restservice.service.impl;
 
-import com.bosonit.restservice.entities.City;
-import com.bosonit.restservice.interfaces.ICityService;
+import com.bosonit.restservice.domain.City;
+import com.bosonit.restservice.service.ICityService;
 
 import java.util.Collection;
 import java.util.HashMap;

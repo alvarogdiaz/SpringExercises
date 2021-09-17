@@ -1,6 +1,6 @@
-package com.bosonit.restservice.interfaces;
+package com.bosonit.restservice.service;
 
-import com.bosonit.restservice.entities.Person;
+import com.bosonit.restservice.domain.Person;
 
 import java.util.Collection;
 import java.util.List;

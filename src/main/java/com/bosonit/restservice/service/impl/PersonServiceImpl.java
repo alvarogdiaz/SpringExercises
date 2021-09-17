@@ -1,7 +1,7 @@
-package com.bosonit.restservice.impl;
+package com.bosonit.restservice.service.impl;
 
-import com.bosonit.restservice.entities.Person;
-import com.bosonit.restservice.interfaces.IPersonService;
+import com.bosonit.restservice.domain.Person;
+import com.bosonit.restservice.service.IPersonService;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;

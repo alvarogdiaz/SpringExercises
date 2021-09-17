@@ -1,6 +1,6 @@
-package com.bosonit.restservice.interfaces;
+package com.bosonit.restservice.service;
 
-import com.bosonit.restservice.entities.City;
+import com.bosonit.restservice.domain.City;
 
 import java.util.Collection;
 

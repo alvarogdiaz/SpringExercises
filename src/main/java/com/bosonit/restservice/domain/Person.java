@@ -1,4 +1,4 @@
-package com.bosonit.restservice.entities;
+package com.bosonit.restservice.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
