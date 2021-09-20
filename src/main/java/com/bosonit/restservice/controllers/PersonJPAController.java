@@ -19,19 +19,6 @@ public class PersonJPAController {
     @Autowired
     PersonaRepository personaRepository;
 
-    private Persona defPerson(String user, String email) {
-        Persona p = new Persona();
-        p.setCity("Barcelona");
-        p.setName("Lolo");
-        p.setActive(false);
-        p.setPassword("qwerty");
-        p.setUser(user);
-        p.setCompany_email(email);
-        p.setPersonal_email("b@outlook.com");
-        p.setCreated_date(new Date());
-        return p;
-    }
-
     private Boolean save(Persona p) {
         try {
             personaRepository.save(p);
@@ -113,14 +100,6 @@ public class PersonJPAController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<HttpStatus> create(@Valid @RequestBody Persona p) {
         if (save(p))
-            return new ResponseEntity<>(HttpStatus.OK);
-
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-
-    @RequestMapping(value = "def", method = RequestMethod.POST)
-    public ResponseEntity<HttpStatus> create2(@RequestParam String user, @RequestParam String email) {
-        if (save(defPerson(user, email)))
             return new ResponseEntity<>(HttpStatus.OK);
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
