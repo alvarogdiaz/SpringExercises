@@ -7,6 +7,8 @@ import com.bosonit.restservice.content.persona.infrastructure.repository.port.Sa
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 @AllArgsConstructor
 public class CreatePersonaUseCase implements CreatePersonaPort {
@@ -16,6 +18,7 @@ public class CreatePersonaUseCase implements CreatePersonaPort {
     @Override
     public Persona create(SavePersona savePersona) throws Exception {
         Persona persona = new Persona();
+        savePersona.setCreated_date(new Date());
         persona.update(savePersona);
         return savePersonaPort.save(persona);
     }

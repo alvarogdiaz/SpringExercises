@@ -62,16 +62,27 @@ public class Persona {
     }
 
     public void update(SavePersona savePersona) {
-        this.user = savePersona.getUser();
-        this.password = savePersona.getPassword();
-        this.city = savePersona.getCity();
-        this.created_date = savePersona.getCreated_date();
-        this.termination_date = savePersona.getTermination_date();
-        this.active = savePersona.getActive();
-        this.image_url = savePersona.getImage_url();
-        this.name = savePersona.getName();
-        this.surname = savePersona.getSurname();
-        this.company_email = savePersona.getCompany_email();
-        this.personal_email = savePersona.getPersonal_email();
+        if (savePersona.getUser() != null)
+            this.user = savePersona.getUser();
+        if (savePersona.getPassword() != null)
+            this.password = savePersona.getPassword();
+        if (savePersona.getCity() != null)
+            this.city = savePersona.getCity();
+        if (savePersona.getCreated_date() != null)
+            this.created_date = savePersona.getCreated_date();
+        if (savePersona.getActive() != null)
+            this.active = savePersona.getActive();
+        if (savePersona.getName() != null)
+            this.name = savePersona.getName();
+        if (savePersona.getCompany_email() != null)
+            this.company_email = savePersona.getCompany_email();
+        if (savePersona.getPersonal_email() != null)
+            this.personal_email = savePersona.getPersonal_email();
+        if (savePersona.getSurname() != null)
+            this.surname = savePersona.getSurname();
+        if (savePersona.getImage_url() != null)
+            this.image_url = savePersona.getImage_url();
+        if (savePersona.getTermination_date() != null)
+            this.termination_date = savePersona.getTermination_date();
     }
 }

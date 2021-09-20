@@ -21,6 +21,7 @@ public class PersonaInputDTO {
     private String personal_email;
     private String image_url;
     private Boolean active;
+    private Date termination_date;
 
     public SavePersona persona(SavePersona savePersona) {
         savePersona.setUser(this.user);
@@ -32,7 +33,7 @@ public class PersonaInputDTO {
         savePersona.setPersonal_email(this.personal_email);
         savePersona.setImage_url(this.image_url);
         savePersona.setActive(this.active);
-        savePersona.setCreated_date(new Date());
+        savePersona.setTermination_date(this.termination_date);
 
         return savePersona;
     }

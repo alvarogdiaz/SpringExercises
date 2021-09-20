@@ -20,6 +20,7 @@ public class SavePersona extends Persona {
     private String image_url;
     private Boolean active;
     private Date created_date;
+    private Date termination_date;
 
     public SavePersona(Persona persona) {
         this.user = persona.getUser();
@@ -32,5 +33,6 @@ public class SavePersona extends Persona {
         this.image_url = persona.getImage_url();
         this.active = persona.getActive();
         this.created_date = persona.getCreated_date();
+        this.termination_date = persona.getTermination_date();
     }
 }
