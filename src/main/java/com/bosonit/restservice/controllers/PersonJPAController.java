@@ -1,12 +1,13 @@
 package com.bosonit.restservice.controllers;
 
 import com.bosonit.restservice.entities.Persona;
-import com.bosonit.restservice.repository.impl.PersonaRepositoryImpl;
+import com.bosonit.restservice.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -16,19 +17,110 @@ import java.util.Optional;
 public class PersonJPAController {
 
     @Autowired
-    PersonaRepositoryImpl personaRepository;
+    PersonaRepository personaRepository;
+
+    private Persona defPerson(String user, String email) {
+        Persona p = new Persona();
+        p.setCity("Barcelona");
+        p.setName("Lolo");
+        p.setActive(false);
+        p.setPassword("qwerty");
+        p.setUser(user);
+        p.setCompany_email(email);
+        p.setPersonal_email("b@outlook.com");
+        p.setCreated_date(new Date());
+        return p;
+    }
+
+    private Boolean save(Persona p) {
+        try {
+            personaRepository.save(p);
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private Boolean deleteId(int id) {
+        try {
+            personaRepository.deleteById(id);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    private Boolean delete(Persona p) {
+        try {
+            personaRepository.delete(p);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    private Boolean deleteAll() {
+        try {
+            personaRepository.deleteAll();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    private Boolean updatePerson(Persona p) {
+        try {
+            Optional<Persona> op = personaRepository.findById(p.getId());
+            if (!op.isPresent()) throw new Exception("");
+
+            p.setId(op.get().getId());
+            personaRepository.save(p);
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private Boolean updateId(int id, String user, String pass, String name, String surn, String cema,
+                              String pema, String city, Boolean act, Date crea, String img, Date term) {
+        try {
+            Optional<Persona> op = personaRepository.findById(id);
+            if (!op.isPresent()) throw new Exception("");
+
+            Persona p = op.get();
+            if (user != null) p.setUser(user);
+            if (pass != null) p.setPassword(pass);
+            if (name != null) p.setName(name);
+            if (surn != null) p.setUser(surn);
+            if (cema != null) p.setCompany_email(cema);
+            if (pema != null) p.setPersonal_email(pema);
+            if (city != null) p.setCity(city);
+            if (img != null)  p.setImagen_url(img);
+            if (act != null)  p.setActive(act);
+            if (crea != null) p.setCreated_date(crea);
+            if (term != null) p.setTermination_date(term);
+
+            personaRepository.save(p);
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<HttpStatus> create() {
-        if (personaRepository.save(personaRepository.defPerson("aaa", "a@gmail.com")))
+    public ResponseEntity<HttpStatus> create(@Valid @RequestBody Persona p) {
+        if (save(p))
             return new ResponseEntity<>(HttpStatus.OK);
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "a", method = RequestMethod.POST)
+    @RequestMapping(value = "def", method = RequestMethod.POST)
     public ResponseEntity<HttpStatus> create2(@RequestParam String user, @RequestParam String email) {
-        if (personaRepository.save(personaRepository.defPerson(user, email)))
+        if (save(defPerson(user, email)))
             return new ResponseEntity<>(HttpStatus.OK);
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -48,7 +140,7 @@ public class PersonJPAController {
     @RequestMapping(value = "name/{name}", method = RequestMethod.GET)
     public ResponseEntity<List<Persona>> findByName(@PathVariable String name) {
         return new ResponseEntity<List<Persona>>
-                (personaRepository.findByName(name), HttpStatus.OK);
+                (personaRepository.findAllByName(name), HttpStatus.OK);
     }
 
     @RequestMapping(value = "all", method = RequestMethod.GET)
@@ -59,7 +151,7 @@ public class PersonJPAController {
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public ResponseEntity<HttpStatus> deleteById(@PathVariable int id) {
-        if (personaRepository.deleteById(id))
+        if (deleteId(id))
             return new ResponseEntity<>(HttpStatus.OK);
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -67,15 +159,15 @@ public class PersonJPAController {
 
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity<HttpStatus> delete() {
-        if (personaRepository.deleteAll())
+        if (deleteAll())
             return new ResponseEntity<>(HttpStatus.OK);
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.DELETE)
-    public ResponseEntity<HttpStatus> deleteByPerson(@RequestBody Persona p) {
-        if (personaRepository.delete(p))
+    public ResponseEntity<HttpStatus> deleteByPerson(@Valid @RequestBody Persona p) {
+        if (delete(p))
             return new ResponseEntity<>(HttpStatus.OK);
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -97,15 +189,15 @@ public class PersonJPAController {
             comp == null && acti == null && crea == null && img == null && term == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        if (personaRepository.updateById(id, user, pass, name, surn, comp, pers, city, acti, crea, img, term))
+        if (updateId(id, user, pass, name, surn, comp, pers, city, acti, crea, img, term))
             return new ResponseEntity<>(HttpStatus.OK);
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<HttpStatus> updateByPerson(@RequestBody Persona p) {
-        if (personaRepository.delete(p))
+    public ResponseEntity<HttpStatus> updateByPerson(@Valid @RequestBody Persona p) {
+        if (updatePerson(p))
             return new ResponseEntity<>(HttpStatus.OK);
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
