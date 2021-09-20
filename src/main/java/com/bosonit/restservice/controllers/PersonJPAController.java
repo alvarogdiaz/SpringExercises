@@ -19,47 +19,10 @@ public class PersonJPAController {
     @Autowired
     PersonaRepository personaRepository;
 
-    private Boolean save(Persona p) {
-        try {
-            personaRepository.save(p);
-        } catch (Exception e) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private Boolean deleteId(int id) {
-        try {
-            personaRepository.deleteById(id);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
-
-    private Boolean delete(Persona p) {
-        try {
-            personaRepository.delete(p);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
-
-    private Boolean deleteAll() {
-        try {
-            personaRepository.deleteAll();
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
-
     private Boolean updatePerson(Persona p) {
         try {
             Optional<Persona> op = personaRepository.findById(p.getId());
-            if (!op.isPresent()) throw new Exception("");
+            if (op.isEmpty()) throw new Exception("");
 
             p.setId(op.get().getId());
             personaRepository.save(p);
@@ -74,7 +37,7 @@ public class PersonJPAController {
                               String pema, String city, Boolean act, Date crea, String img, Date term) {
         try {
             Optional<Persona> op = personaRepository.findById(id);
-            if (!op.isPresent()) throw new Exception("");
+            if (op.isEmpty()) throw new Exception("");
 
             Persona p = op.get();
             if (user != null) p.setUser(user);
@@ -99,10 +62,13 @@ public class PersonJPAController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<HttpStatus> create(@Valid @RequestBody Persona p) {
-        if (save(p))
-            return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            personaRepository.save(p);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
@@ -130,26 +96,35 @@ public class PersonJPAController {
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public ResponseEntity<HttpStatus> deleteById(@PathVariable int id) {
-        if (deleteId(id))
-            return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            personaRepository.deleteById(id);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity<HttpStatus> delete() {
-        if (deleteAll())
-            return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            personaRepository.deleteAll();
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.DELETE)
     public ResponseEntity<HttpStatus> deleteByPerson(@Valid @RequestBody Persona p) {
-        if (delete(p))
-            return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            personaRepository.delete(p);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
