@@ -4,7 +4,9 @@ import com.bosonit.restservice.content.persona.domain.noDatabase.SavePersona;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Email;
 import java.util.Date;
 
 @Data
@@ -12,16 +14,20 @@ import java.util.Date;
 @AllArgsConstructor
 public class PersonaInputDTO {
 
-    private String user;
     private String password;
     private String name;
     private String surname;
     private String city;
-    private String company_email;
-    private String personal_email;
     private String image_url;
     private Boolean active;
     private Date termination_date;
+
+    @Length(min = 6, max = 10, message = "Length out of range [6-10]")
+    private String user;
+    @Email(message = "Invalid company_email")
+    private String company_email;
+    @Email(message = "Invalid personal_email")
+    private String personal_email;
 
     public SavePersona persona(SavePersona savePersona) {
         savePersona.setUser(this.user);

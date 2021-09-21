@@ -5,14 +5,14 @@ import com.bosonit.restservice.content.persona.domain.Persona;
 import com.bosonit.restservice.content.persona.domain.noDatabase.SavePersona;
 import com.bosonit.restservice.content.persona.infrastructure.controller.dto.input.PersonaInputDTO;
 import com.bosonit.restservice.content.persona.infrastructure.controller.dto.output.PersonaOutputDTO;
-import com.bosonit.restservice.content.persona.infrastructure.repository.port.FindPersonaPort;
-import com.bosonit.restservice.content.persona.infrastructure.repository.port.SavePersonaPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.Date;
 
 @RestController
@@ -23,18 +23,23 @@ public class UpdatePersonaController {
     private UpdatePersonaPort updatePersonaPort;
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    @Transactional(rollbackOn = Exception.class)
-    public ResponseEntity<PersonaOutputDTO> update(
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseEntity<?> update(
             @PathVariable int id,
-            @RequestBody PersonaInputDTO personaInputDTO)
+            @Valid @RequestBody PersonaInputDTO personaInputDTO,
+            Errors errors)
             throws Exception {
+        if (errors.hasErrors()) {
+            return new ResponseEntity<>(errors.getFieldError().getDefaultMessage(),
+                    HttpStatus.BAD_REQUEST);
+        }
         SavePersona savePersona = personaInputDTO.persona(new SavePersona());
         Persona updatePersona = updatePersonaPort.update(id, savePersona);
         return new ResponseEntity<>(new PersonaOutputDTO(updatePersona), HttpStatus.OK);
     }
 
     @RequestMapping(value = "params/{id}", method = RequestMethod.PUT)
-    @Transactional(rollbackOn = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<PersonaOutputDTO> update(
             @PathVariable int id,
             @RequestParam(required = false) String user,
