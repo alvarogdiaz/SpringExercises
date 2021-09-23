@@ -2,6 +2,7 @@ package com.bosonit.restservice.content.persona.infrastructure.controller;
 
 import com.bosonit.restservice.content.persona.infrastructure.controller.dto.output.PersonaOutputDTO;
 import com.bosonit.restservice.content.persona.infrastructure.repository.port.FindPersonaPort;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class FindPersonaController {
     @Autowired
     private FindPersonaPort findPersonaPort;
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @GetMapping("{id}")
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<PersonaOutputDTO> findById(
             @PathVariable int id)
@@ -27,7 +28,7 @@ public class FindPersonaController {
                 HttpStatus.OK);
     }
 
-    @RequestMapping(value = "name/{name}", method = RequestMethod.GET)
+    @GetMapping("name/{name}")
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<List<PersonaOutputDTO>> findByName(
             @PathVariable String name)
@@ -37,7 +38,7 @@ public class FindPersonaController {
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "user/{user}", method = RequestMethod.GET)
+    @GetMapping("user/{user}")
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<List<PersonaOutputDTO>> findByUser(
             @PathVariable String user)
@@ -47,7 +48,7 @@ public class FindPersonaController {
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<List<PersonaOutputDTO>> findAll()
             throws Exception {

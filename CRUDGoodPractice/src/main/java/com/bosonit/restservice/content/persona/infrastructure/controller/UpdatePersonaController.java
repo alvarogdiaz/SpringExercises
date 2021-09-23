@@ -5,12 +5,14 @@ import com.bosonit.restservice.content.persona.domain.Persona;
 import com.bosonit.restservice.content.persona.domain.noDatabase.SavePersona;
 import com.bosonit.restservice.content.persona.infrastructure.controller.dto.input.PersonaInputDTO;
 import com.bosonit.restservice.content.persona.infrastructure.controller.dto.output.PersonaOutputDTO;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.Valid;
 import java.util.Date;
@@ -22,7 +24,7 @@ public class UpdatePersonaController {
     @Autowired
     private UpdatePersonaPort updatePersonaPort;
 
-    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    @PutMapping("{id}")
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<?> update(
             @PathVariable int id,
@@ -30,15 +32,23 @@ public class UpdatePersonaController {
             Errors errors)
             throws Exception {
         if (errors.hasErrors()) {
-            return new ResponseEntity<>(errors.getFieldError().getDefaultMessage(),
-                    HttpStatus.BAD_REQUEST);
+            throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,
+                    errors.getFieldError().getDefaultMessage());
         }
+
         SavePersona savePersona = personaInputDTO.persona(new SavePersona());
-        Persona updatePersona = updatePersonaPort.update(id, savePersona);
+        Persona updatePersona;
+
+        try {
+            updatePersona = updatePersonaPort.update(id, savePersona);
+        } catch (Exception e) {
+            throw new NotFoundException("Person with id " + id + " not found");
+        }
+
         return new ResponseEntity<>(new PersonaOutputDTO(updatePersona), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "params/{id}", method = RequestMethod.PUT)
+    @PutMapping("params/{id}")
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<PersonaOutputDTO> update(
             @PathVariable int id,
@@ -58,12 +68,20 @@ public class UpdatePersonaController {
                 city == null && company_email == null && personal_email == null &&
                 image_url == null && active == null && created_date == null &&
                 termination_date == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,
+                    "All the data can't be NULL");
         }
 
         SavePersona savePersona = new SavePersona(user, password, name, surname, city,
                 company_email, personal_email, image_url, active, created_date, termination_date);
-        Persona updatePersona = updatePersonaPort.update(id, savePersona);
+        Persona updatePersona;
+
+        try {
+            updatePersona = updatePersonaPort.update(id, savePersona);
+        } catch (Exception e) {
+            throw new NotFoundException("Person with id " + id + " not found");
+        }
+
         return new ResponseEntity<>(new PersonaOutputDTO(updatePersona), HttpStatus.OK);
     }
 }

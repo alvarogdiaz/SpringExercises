@@ -1,6 +1,7 @@
 package com.bosonit.restservice.content.persona.infrastructure.controller;
 
 import com.bosonit.restservice.content.persona.infrastructure.repository.port.DeletePersonaPort;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +16,20 @@ public class DeletePersonaController {
     @Autowired
     private DeletePersonaPort deletePersonaPort;
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    @DeleteMapping("{id}")
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<HttpStatus> delete(
             @PathVariable int id)
             throws Exception {
-        deletePersonaPort.delete(id);
+        try {
+            deletePersonaPort.delete(id);
+        } catch (Exception e) {
+            throw new NotFoundException("Person with id " + id + " not found");
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<HttpStatus> deleteAll()
             throws Exception {

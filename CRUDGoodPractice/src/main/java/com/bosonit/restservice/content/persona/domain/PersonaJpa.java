@@ -22,7 +22,7 @@ public class PersonaJpa {
     int id;
 
     @Column(nullable = false, length = 10)
-    @Length(min = 6, max = 10, message = "Length out of range [6-10]")
+    @Length(min = 6, max = 10, message = "Length of user out of range [6-10]")
     String user;
 
     @Column(nullable = false)

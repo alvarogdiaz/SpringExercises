@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.Valid;
 
@@ -21,16 +22,17 @@ public class CreatePersonaController {
     @Autowired
     private CreatePersonaPort createPersonaPort;
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<?> create(
             @Valid @RequestBody PersonaInputDTO personaInputDTO,
             Errors errors)
             throws Exception {
         if (errors.hasErrors()) {
-            return new ResponseEntity<>(errors.getFieldError().getDefaultMessage(),
-                    HttpStatus.BAD_REQUEST);
+            throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,
+                    errors.getFieldError().getDefaultMessage());
         }
+
         SavePersona savePersona = personaInputDTO.persona(new SavePersona());
         Persona createPersona = createPersonaPort.create(savePersona);
         return new ResponseEntity<>(new PersonaOutputDTO(createPersona), HttpStatus.CREATED);

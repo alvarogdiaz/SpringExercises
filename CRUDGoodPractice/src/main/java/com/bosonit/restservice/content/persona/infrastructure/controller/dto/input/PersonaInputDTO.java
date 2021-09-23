@@ -22,11 +22,11 @@ public class PersonaInputDTO {
     private Boolean active;
     private Date termination_date;
 
-    @Length(min = 6, max = 10, message = "Length out of range [6-10]")
+    @Length(min = 6, max = 10, message = "Length of user out of range [6-10]")
     private String user;
-    @Email(message = "Invalid company_email")
+    @Email(message = "Invalid company email")
     private String company_email;
-    @Email(message = "Invalid personal_email")
+    @Email(message = "Invalid personal email")
     private String personal_email;
 
     public SavePersona persona(SavePersona savePersona) {

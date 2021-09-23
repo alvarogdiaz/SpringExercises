@@ -4,6 +4,7 @@ import com.bosonit.restservice.content.persona.domain.Persona;
 import com.bosonit.restservice.content.persona.domain.PersonaJpa;
 import com.bosonit.restservice.content.persona.infrastructure.repository.jpa.PersonaRepositoryJpa;
 import com.bosonit.restservice.content.persona.infrastructure.repository.port.FindPersonaPort;
+import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -25,7 +26,9 @@ public class FindPersonaRepository implements FindPersonaPort {
 
     @Override
     public Persona findById(int id) throws Exception {
-        PersonaJpa p = personaRepositoryJpa.findById(id).orElseThrow(() -> new Exception(""));
+        PersonaJpa p = personaRepositoryJpa.findById(id).orElseThrow(() ->
+            new NotFoundException("Person with id " + id + " not found"));
+
         return new Persona(p);
     }
 
