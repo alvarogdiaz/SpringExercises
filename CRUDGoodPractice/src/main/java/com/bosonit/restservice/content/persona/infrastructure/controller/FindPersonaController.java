@@ -33,7 +33,7 @@ public class FindPersonaController {
             @PathVariable String name)
             throws Exception {
         return new ResponseEntity<>(findPersonaPort.findByName(name).stream()
-                .map(p -> new PersonaOutputDTO(p))
+                .map(PersonaOutputDTO::new)
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
 
@@ -43,7 +43,7 @@ public class FindPersonaController {
             @PathVariable String user)
             throws Exception {
         return new ResponseEntity<>(findPersonaPort.findByUser(user).stream()
-                .map(p -> new PersonaOutputDTO(p))
+                .map(PersonaOutputDTO::new)
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
 
@@ -52,7 +52,7 @@ public class FindPersonaController {
     public ResponseEntity<List<PersonaOutputDTO>> findAll()
             throws Exception {
         return new ResponseEntity<>(findPersonaPort.findAll().stream()
-                .map(p -> new PersonaOutputDTO(p))
+                .map(PersonaOutputDTO::new)
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
 }
