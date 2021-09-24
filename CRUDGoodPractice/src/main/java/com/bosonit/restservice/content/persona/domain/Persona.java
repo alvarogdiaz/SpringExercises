@@ -24,7 +24,7 @@ public class Persona {
     private String personal_email;
     private String city;
     private Boolean active;
-    private Date created_date;
+    private Date created_date = new Date();
     private String image_url;
     private Date termination_date;
 
@@ -58,7 +58,6 @@ public class Persona {
         this.personal_email = personaInputDTO.getPersonal_email();
         this.image_url = personaInputDTO.getImage_url();
         this.active = personaInputDTO.getActive();
-        this.created_date = new Date();
     }
 
     public void update(SavePersona savePersona) {

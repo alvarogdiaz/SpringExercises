@@ -18,8 +18,8 @@ public class ProfesorJpa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id_profesor;
 
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "persona")
-    @OneToOne(fetch = FetchType.LAZY)
     private PersonaJpa id_persona;
 
     @Column
@@ -28,7 +28,8 @@ public class ProfesorJpa {
     @Column(nullable = false)
     private String branch;
 
-    @ManyToMany(mappedBy = "profesores")
+    @OneToMany(mappedBy = "id_profesor", cascade = CascadeType.ALL,
+            orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<StudentJpa> students;
 
 }

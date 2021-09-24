@@ -48,7 +48,7 @@ public class UpdatePersonaController {
         return new ResponseEntity<>(new PersonaOutputDTO(updatePersona), HttpStatus.OK);
     }
 
-    @PutMapping("params/{id}")
+    @PutMapping("update/{id}")
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<PersonaOutputDTO> update(
             @PathVariable int id,

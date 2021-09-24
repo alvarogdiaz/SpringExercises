@@ -18,7 +18,6 @@ public class CreatePersonaUseCase implements CreatePersonaPort {
     @Override
     public Persona create(SavePersona savePersona) throws Exception {
         Persona persona = new Persona();
-        savePersona.setCreated_date(new Date());
         persona.update(savePersona);
         return savePersonaPort.save(persona);
     }

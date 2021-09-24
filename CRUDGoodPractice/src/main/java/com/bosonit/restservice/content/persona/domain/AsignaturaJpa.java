@@ -19,9 +19,9 @@ public class AsignaturaJpa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id_asignatura;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_student")
-    private StudentJpa id_student;
+    private StudentJpa id_student;*/
 
     @Column
     private String asignatura;

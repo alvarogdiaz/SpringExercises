@@ -2,6 +2,8 @@ package com.bosonit.restservice.content.persona.domain;
 
 import lombok.*;
 
+import java.util.Set;
+
 @Setter
 @Getter
 @EqualsAndHashCode
@@ -15,6 +17,8 @@ public class Profesor {
 
     private String comments;
     private String branch;
+
+    private Set<String> students;
 
     private ProfesorJpa profesorJpa;
 

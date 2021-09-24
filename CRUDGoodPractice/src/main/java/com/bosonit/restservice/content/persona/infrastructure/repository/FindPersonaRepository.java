@@ -20,7 +20,7 @@ public class FindPersonaRepository implements FindPersonaPort {
     @Override
     public List<Persona> findAll() throws Exception {
         return personaRepositoryJpa.findAll().stream()
-                .map(p -> new Persona(p))
+                .map(Persona::new)
                 .collect(Collectors.toList());
     }
 
@@ -35,14 +35,14 @@ public class FindPersonaRepository implements FindPersonaPort {
     @Override
     public List<Persona> findByName(String name) throws Exception {
         return personaRepositoryJpa.findAllByName(name).stream()
-                .map(p -> new Persona(p))
+                .map(Persona::new)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Persona> findByUser(String user) throws Exception {
         return personaRepositoryJpa.findAllByUser(user).stream()
-                .map(p -> new Persona(p))
+                .map(Persona::new)
                 .collect(Collectors.toList());
     }
 }

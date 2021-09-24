@@ -17,7 +17,7 @@ public class Asignatura {
 
     private String asignatura;
     private String comments;
-    private Date initial_date;
+    private Date initial_date = new Date();
     private Date finish_date;
 
     private AsignaturaJpa asignaturaJpa;
