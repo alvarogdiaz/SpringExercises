@@ -19,7 +19,7 @@ public class PersonaJpa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    int id_persona;
 
     @Column(nullable = false, length = 10)
     @Length(min = 6, max = 10, message = "Length of user out of range [6-10]")
@@ -57,8 +57,16 @@ public class PersonaJpa {
     @Column
     Date termination_date;
 
+    @OneToOne(mappedBy = "id_persona", cascade = CascadeType.ALL,
+            orphanRemoval = true, fetch = FetchType.LAZY)
+    ProfesorJpa profesorJpa;
+
+    @OneToOne(mappedBy = "id_persona", cascade = CascadeType.ALL,
+            orphanRemoval = true, fetch = FetchType.LAZY)
+    StudentJpa studentJpa;
+
     public PersonaJpa(Persona persona) {
-        this.id = persona.getId();
+        this.id_persona = persona.getId_persona();
         this.user = persona.getUser();
         this.password = persona.getPassword();
         this.name = persona.getName();

@@ -21,7 +21,7 @@ public class PersonaOutputDTO implements Serializable {
     protected Boolean active;
 
     public PersonaOutputDTO(Persona persona) {
-        this.setId(persona.getId());
+        this.setId(persona.getId_persona());
         this.setName(persona.getName());
         this.setUser(persona.getUser());
         this.setImage_url(persona.getImage_url());
@@ -29,7 +29,7 @@ public class PersonaOutputDTO implements Serializable {
     }
 
     public PersonaOutputDTO(PersonaJpa personaJpa) {
-        this.setId(personaJpa.getId());
+        this.setId(personaJpa.getId_persona());
         this.setName(personaJpa.getName());
         this.setUser(personaJpa.getUser());
         this.setImage_url(personaJpa.getImage_url());

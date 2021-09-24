@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class Persona {
 
-    private int id;
+    private int id_persona;
 
     private String user;
     private String password;
@@ -34,7 +34,7 @@ public class Persona {
         if (personaJpa == null) return;
 
         this.personaJpa = personaJpa;
-        this.id = personaJpa.getId();
+        this.id_persona = personaJpa.getId_persona();
         this.user = personaJpa.getUser();
         this.name = personaJpa.getName();
         this.password = personaJpa.getPassword();
