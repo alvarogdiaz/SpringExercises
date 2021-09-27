@@ -1,7 +1,9 @@
-package com.bosonit.restservice.content.persona.domain;
+package com.bosonit.restservice.content.student.domain;
 
-import com.bosonit.restservice.content.persona.domain.noDatabase.SaveStudent;
-import com.bosonit.restservice.content.persona.infrastructure.controller.dto.input.StudentInputDTO;
+import com.bosonit.restservice.content.persona.domain.PersonaJpa;
+import com.bosonit.restservice.content.persona.domain.Profesor;
+import com.bosonit.restservice.content.student.domain.noDatabase.SaveStudent;
+import com.bosonit.restservice.content.student.infrastructure.controller.dto.input.StudentInputDTO;
 import lombok.*;
 
 import java.util.Set;

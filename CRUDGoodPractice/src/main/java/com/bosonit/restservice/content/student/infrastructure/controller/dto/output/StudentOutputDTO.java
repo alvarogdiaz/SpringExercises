@@ -1,7 +1,8 @@
-package com.bosonit.restservice.content.persona.infrastructure.controller.dto.output;
+package com.bosonit.restservice.content.student.infrastructure.controller.dto.output;
 
-import com.bosonit.restservice.content.persona.domain.Student;
-import com.bosonit.restservice.content.persona.domain.StudentJpa;
+import com.bosonit.restservice.content.student.domain.Student;
+import com.bosonit.restservice.content.student.domain.StudentJpa;
+import com.bosonit.restservice.content.persona.infrastructure.controller.dto.output.PersonaOutputDTO;
 import lombok.Getter;
 import lombok.Setter;
 

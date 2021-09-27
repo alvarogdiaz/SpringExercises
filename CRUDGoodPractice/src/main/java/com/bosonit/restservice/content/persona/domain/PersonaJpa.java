@@ -1,5 +1,6 @@
 package com.bosonit.restservice.content.persona.domain;
 
+import com.bosonit.restservice.content.student.domain.StudentJpa;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

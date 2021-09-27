@@ -1,7 +1,7 @@
-package com.bosonit.restservice.content.persona.infrastructure.repository;
+package com.bosonit.restservice.content.student.infrastructure.repository;
 
-import com.bosonit.restservice.content.persona.infrastructure.repository.jpa.StudentRepositoryJpa;
-import com.bosonit.restservice.content.persona.infrastructure.repository.port.DeleteStudentPort;
+import com.bosonit.restservice.content.student.infrastructure.repository.jpa.StudentRepositoryJpa;
+import com.bosonit.restservice.content.student.infrastructure.repository.port.DeleteStudentPort;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 

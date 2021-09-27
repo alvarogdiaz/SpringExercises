@@ -1,9 +1,9 @@
-package com.bosonit.restservice.content.persona.infrastructure.controller;
+package com.bosonit.restservice.content.student.infrastructure.controller;
 
-import com.bosonit.restservice.content.persona.domain.Student;
-import com.bosonit.restservice.content.persona.infrastructure.controller.dto.output.SimpleStudentOutputDTO;
-import com.bosonit.restservice.content.persona.infrastructure.controller.dto.output.StudentOutputDTO;
-import com.bosonit.restservice.content.persona.infrastructure.repository.port.FindStudentPort;
+import com.bosonit.restservice.content.student.domain.Student;
+import com.bosonit.restservice.content.student.infrastructure.controller.dto.output.SimpleStudentOutputDTO;
+import com.bosonit.restservice.content.student.infrastructure.controller.dto.output.StudentOutputDTO;
+import com.bosonit.restservice.content.student.infrastructure.repository.port.FindStudentPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

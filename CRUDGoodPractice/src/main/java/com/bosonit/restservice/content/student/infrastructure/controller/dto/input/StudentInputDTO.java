@@ -1,6 +1,7 @@
-package com.bosonit.restservice.content.persona.infrastructure.controller.dto.input;
+package com.bosonit.restservice.content.student.infrastructure.controller.dto.input;
 
-import com.bosonit.restservice.content.persona.domain.noDatabase.SaveStudent;
+import com.bosonit.restservice.content.persona.infrastructure.controller.dto.input.PersonaInputDTO;
+import com.bosonit.restservice.content.student.domain.noDatabase.SaveStudent;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StudentInputDTO {
 
-    private Integer id_persona;
+    private PersonaInputDTO id_persona;
     private Integer num_hours_week;
     private String comments;
     private String branch;

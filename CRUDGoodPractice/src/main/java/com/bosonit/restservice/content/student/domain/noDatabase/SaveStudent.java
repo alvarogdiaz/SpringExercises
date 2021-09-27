@@ -1,12 +1,10 @@
-package com.bosonit.restservice.content.persona.domain.noDatabase;
+package com.bosonit.restservice.content.student.domain.noDatabase;
 
-import com.bosonit.restservice.content.persona.domain.Student;
+import com.bosonit.restservice.content.student.domain.Student;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Set;
 
 @Setter
 @Getter

@@ -1,6 +1,6 @@
-package com.bosonit.restservice.content.persona.infrastructure.repository.jpa;
+package com.bosonit.restservice.content.student.infrastructure.repository.jpa;
 
-import com.bosonit.restservice.content.persona.domain.StudentJpa;
+import com.bosonit.restservice.content.student.domain.StudentJpa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

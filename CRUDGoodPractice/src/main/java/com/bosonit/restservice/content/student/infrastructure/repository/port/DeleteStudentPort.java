@@ -1,4 +1,4 @@
-package com.bosonit.restservice.content.persona.infrastructure.repository.port;
+package com.bosonit.restservice.content.student.infrastructure.repository.port;
 
 public interface DeleteStudentPort {
     void delete(String id) throws Exception;

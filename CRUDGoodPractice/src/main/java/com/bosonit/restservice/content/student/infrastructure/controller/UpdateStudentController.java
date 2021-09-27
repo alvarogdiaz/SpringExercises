@@ -1,10 +1,10 @@
-package com.bosonit.restservice.content.persona.infrastructure.controller;
+package com.bosonit.restservice.content.student.infrastructure.controller;
 
-import com.bosonit.restservice.content.persona.application.port.UpdateStudentPort;
-import com.bosonit.restservice.content.persona.domain.Student;
-import com.bosonit.restservice.content.persona.domain.noDatabase.SaveStudent;
-import com.bosonit.restservice.content.persona.infrastructure.controller.dto.input.StudentInputDTO;
-import com.bosonit.restservice.content.persona.infrastructure.controller.dto.output.StudentOutputDTO;
+import com.bosonit.restservice.content.student.application.port.UpdateStudentPort;
+import com.bosonit.restservice.content.student.domain.Student;
+import com.bosonit.restservice.content.student.domain.noDatabase.SaveStudent;
+import com.bosonit.restservice.content.student.infrastructure.controller.dto.input.SimpleStudentInputDTO;
+import com.bosonit.restservice.content.student.infrastructure.controller.dto.output.StudentOutputDTO;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +27,7 @@ public class UpdateStudentController {
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<?> update(
             @PathVariable String id,
-            @Valid @RequestBody StudentInputDTO studentInputDTO,
+            @Valid @RequestBody SimpleStudentInputDTO studentInputDTO,
             Errors errors)
             throws Exception {
         if (errors.hasErrors()) {

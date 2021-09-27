@@ -1,12 +1,12 @@
-package com.bosonit.restservice.content.persona.application;
+package com.bosonit.restservice.content.student.application;
 
-import com.bosonit.restservice.content.persona.application.port.UpdateStudentPort;
+import com.bosonit.restservice.content.student.application.port.UpdateStudentPort;
 import com.bosonit.restservice.content.persona.domain.PersonaJpa;
-import com.bosonit.restservice.content.persona.domain.Student;
-import com.bosonit.restservice.content.persona.domain.noDatabase.SaveStudent;
+import com.bosonit.restservice.content.student.domain.Student;
+import com.bosonit.restservice.content.student.domain.noDatabase.SaveStudent;
 import com.bosonit.restservice.content.persona.infrastructure.repository.port.FindPersonaPort;
-import com.bosonit.restservice.content.persona.infrastructure.repository.port.FindStudentPort;
-import com.bosonit.restservice.content.persona.infrastructure.repository.port.SaveStudentPort;
+import com.bosonit.restservice.content.student.infrastructure.repository.port.FindStudentPort;
+import com.bosonit.restservice.content.student.infrastructure.repository.port.SaveStudentPort;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

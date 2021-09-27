@@ -1,9 +1,9 @@
-package com.bosonit.restservice.content.persona.infrastructure.repository;
+package com.bosonit.restservice.content.student.infrastructure.repository;
 
-import com.bosonit.restservice.content.persona.domain.Student;
-import com.bosonit.restservice.content.persona.domain.StudentJpa;
-import com.bosonit.restservice.content.persona.infrastructure.repository.jpa.StudentRepositoryJpa;
-import com.bosonit.restservice.content.persona.infrastructure.repository.port.SaveStudentPort;
+import com.bosonit.restservice.content.student.domain.Student;
+import com.bosonit.restservice.content.student.domain.StudentJpa;
+import com.bosonit.restservice.content.student.infrastructure.repository.jpa.StudentRepositoryJpa;
+import com.bosonit.restservice.content.student.infrastructure.repository.port.SaveStudentPort;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 

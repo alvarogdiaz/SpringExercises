@@ -1,6 +1,6 @@
-package com.bosonit.restservice.content.persona.infrastructure.controller;
+package com.bosonit.restservice.content.student.infrastructure.controller;
 
-import com.bosonit.restservice.content.persona.infrastructure.repository.port.DeleteStudentPort;
+import com.bosonit.restservice.content.student.infrastructure.repository.port.DeleteStudentPort;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

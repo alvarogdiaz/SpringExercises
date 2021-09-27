@@ -1,6 +1,6 @@
-package com.bosonit.restservice.content.persona.infrastructure.repository.port;
+package com.bosonit.restservice.content.student.infrastructure.repository.port;
 
-import com.bosonit.restservice.content.persona.domain.Student;
+import com.bosonit.restservice.content.student.domain.Student;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
-package com.bosonit.restservice.content.persona.domain;
+package com.bosonit.restservice.content.student.domain;
 
+import com.bosonit.restservice.content.persona.domain.PersonaJpa;
+import com.bosonit.restservice.content.persona.domain.ProfesorJpa;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor

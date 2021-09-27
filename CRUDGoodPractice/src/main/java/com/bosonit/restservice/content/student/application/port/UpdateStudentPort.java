@@ -1,7 +1,7 @@
-package com.bosonit.restservice.content.persona.application.port;
+package com.bosonit.restservice.content.student.application.port;
 
-import com.bosonit.restservice.content.persona.domain.Student;
-import com.bosonit.restservice.content.persona.domain.noDatabase.SaveStudent;
+import com.bosonit.restservice.content.student.domain.Student;
+import com.bosonit.restservice.content.student.domain.noDatabase.SaveStudent;
 
 public interface UpdateStudentPort {
     Student update(String id_student, SaveStudent saveStudent) throws Exception;

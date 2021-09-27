@@ -1,4 +1,4 @@
-package com.bosonit.restservice.content.persona.infrastructure.exception.response;
+package com.bosonit.restservice.content.exception.response;
 
 import lombok.Getter;
 
