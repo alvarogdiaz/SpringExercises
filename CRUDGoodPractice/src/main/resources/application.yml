@@ -10,10 +10,10 @@ spring:
   password:
  jpa:
   show-sql: true
-  properties:
-   hiberante:
-    format: true
   hibernate:
    ddl-auto: create-drop
+  properties:
+   hibernate:
+    #format_sql: true
 hibernate:
  dialect: org.hibernate.dialect.HSQLDialect

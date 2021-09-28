@@ -9,4 +9,5 @@ public interface FindStudentPort {
     Student findById(String id) throws Exception;
     //List<Student> findByIdOfProfesor(String id) throws Exception;
     List<Student> findByBranch(String branch) throws Exception;
+    List<Student> findByTeacherId(String id) throws Exception;
 }

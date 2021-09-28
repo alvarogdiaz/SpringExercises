@@ -1,11 +1,15 @@
 package com.bosonit.restservice.content.student.infrastructure.controller.dto.input;
 
 import com.bosonit.restservice.content.student.domain.noDatabase.SaveStudent;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public abstract class StudentInput implements Serializable {
     private Integer num_hours_week;
     private String comments;

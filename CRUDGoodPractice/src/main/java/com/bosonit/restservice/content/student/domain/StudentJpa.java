@@ -1,17 +1,24 @@
 package com.bosonit.restservice.content.student.domain;
 
-import com.bosonit.restservice.content.persona.domain.PersonaJpa;
-import com.bosonit.restservice.content.persona.domain.ProfesorJpa;
+import com.bosonit.restservice.content.person.domain.PersonJpa;
+import com.bosonit.restservice.content.subject.domain.Subject;
+import com.bosonit.restservice.content.subject.domain.SubjectJpa;
+import com.bosonit.restservice.content.teacher.domain.TeacherJpa;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "STUDENT")
-public class StudentJpa {
+public class StudentJpa implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +26,11 @@ public class StudentJpa {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "persona")
-    private PersonaJpa id_persona;
+    private PersonJpa id_persona;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_profesor")
-    private ProfesorJpa id_profesor;
+    @JoinColumn(name = "teacher")
+    private TeacherJpa teacher;
 
     @Column(nullable = false)
     private Integer num_hours_week;
@@ -34,17 +41,24 @@ public class StudentJpa {
     @Column(nullable = false)
     private String branch;
 
-    /*@OneToMany(mappedBy = "id_asignatura", cascade = CascadeType.ALL,
-            orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<AsignaturaJpa> asignaturas;*/
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE },
+            fetch = FetchType.LAZY)
+    @JoinTable(name = "student_subjects",
+                joinColumns = {@JoinColumn(name = "id_student")},
+                inverseJoinColumns = {@JoinColumn(name = "id_subject")})
+    private Set<SubjectJpa> subjects = new HashSet<>();
 
     public StudentJpa(Student student) {
         this.id_student = student.getId_student();
-        this.id_persona = student.getId_persona();
-        //this.id_profesor = student.getId_profesor().getId_profesor();
+        this.id_persona = new PersonJpa(student.getId_persona());
+        if (student.getTeacher() != null)
+            this.teacher = new TeacherJpa(student.getTeacher());
         this.num_hours_week = student.getNum_hours_week();
         this.branch = student.getBranch();
         this.comments = student.getComments();
+        /*this.subjects = student.getSubjects().stream()
+                .map(SubjectJpa::new)
+                .collect(Collectors.toSet());*/
     }
 
 }

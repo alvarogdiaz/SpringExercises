@@ -34,7 +34,9 @@ public class FindStudentRepository implements FindStudentPort {
 
     /*@Override
     public List<Student> findByIdOfProfesor(String id) throws Exception {
-        return studentRepositoryJpa.findAllById_profesor(id).stream()
+        ProfesorJpa p = new ProfesorJpa();
+        p.setId_profesor(id);
+        return studentRepositoryJpa.findById_profesor_Id_profesor(p).stream()
                 .map(Student::new)
                 .collect(Collectors.toList());
     }*/
@@ -42,6 +44,13 @@ public class FindStudentRepository implements FindStudentPort {
     @Override
     public List<Student> findByBranch(String branch) throws Exception {
         return studentRepositoryJpa.findAllByBranch(branch).stream()
+                .map(Student::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Student> findByTeacherId(String id) throws Exception {
+        return studentRepositoryJpa.findAllByTeacherId(id).stream()
                 .map(Student::new)
                 .collect(Collectors.toList());
     }

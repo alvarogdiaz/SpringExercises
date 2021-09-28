@@ -5,6 +5,10 @@ import com.bosonit.restservice.content.student.domain.Student;
 import com.bosonit.restservice.content.student.domain.noDatabase.SaveStudent;
 import com.bosonit.restservice.content.student.infrastructure.controller.dto.input.SimpleStudentInputDTO;
 import com.bosonit.restservice.content.student.infrastructure.controller.dto.output.StudentOutputDTO;
+import com.bosonit.restservice.content.subject.domain.noDatabase.SaveSubject;
+import com.bosonit.restservice.content.subject.infrastructure.controller.dto.input.SimpleSubjectInputDTO;
+import com.bosonit.restservice.content.subject.infrastructure.controller.dto.input.SubjectInputDTO;
+import com.bosonit.restservice.content.teacher.infrastructure.controller.dto.input.SimpleTeacherInputDTO;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,12 +43,43 @@ public class UpdateStudentController {
         Student updateStudent;
 
         try {
-            updateStudent = updateStudentPort.update(id, studentInputDTO.getId_persona(), saveStudent);
+            updateStudent = updateStudentPort.update(id, studentInputDTO.getId_persona(), null, saveStudent);
         } catch (Exception e) {
             throw new NotFoundException("Student with id " + id + " not found");
         }
 
         return new ResponseEntity<>(new StudentOutputDTO(updateStudent), HttpStatus.OK);
+    }
+
+    /*@PutMapping("subject/{id}")
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseEntity<StudentOutputDTO> addSubject(
+            @PathVariable String id,
+            @RequestBody SimpleSubjectInputDTO simpleSubjectInputDTO)
+            throws Exception {
+        SaveSubject saveSubject = simpleSubjectInputDTO.subject(new SaveSubject());
+        Student student = updateStudentPort.addSubject(id, saveSubject);
+        return new ResponseEntity<>(new StudentOutputDTO(student), HttpStatus.OK);
+    }*/
+
+    @PutMapping("subject/{id}/{subject}")
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseEntity<StudentOutputDTO> addSubject(
+            @PathVariable(name = "id") String id_student,
+            @PathVariable(name = "subject") String id_subject)
+            throws Exception {
+        Student student = updateStudentPort.addSubject(id_student, id_subject);
+        return new ResponseEntity<>(new StudentOutputDTO(student), HttpStatus.OK);
+    }
+
+    @PutMapping("teacher/{id}/{teacher}")
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseEntity<StudentOutputDTO> teacher(
+            @PathVariable(name = "id") String id_student,
+            @PathVariable(name = "teacher") String id_teacher)
+            throws Exception {
+        Student student = updateStudentPort.teacher(id_student, id_teacher);
+        return new ResponseEntity<>(new StudentOutputDTO(student), HttpStatus.OK);
     }
 
     @PutMapping("update/{id}")
@@ -54,9 +89,11 @@ public class UpdateStudentController {
             @RequestParam(required = false) Integer id_persona,
             @RequestParam(required = false) Integer num_hours_week,
             @RequestParam(required = false) String comments,
-            @RequestParam(required = false) String branch)
+            @RequestParam(required = false) String branch,
+            @RequestParam(required = false) String id_profesor)
             throws Exception {
-        if (id_persona == null && branch == null && comments == null && num_hours_week == null) {
+        if (id_persona == null && branch == null && comments == null
+                && num_hours_week == null && id_profesor == null) {
             throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,
                     "All the data can't be NULL");
         }
@@ -65,13 +102,12 @@ public class UpdateStudentController {
         Student updateStudent;
 
         try {
-            updateStudent = (id_persona == null) ?
-                    updateStudentPort.update(id, saveStudent) :
-                    updateStudentPort.update(id, id_persona, saveStudent);
+            updateStudent = updateStudentPort.update(id, id_persona, id_profesor, saveStudent);
         } catch (Exception e) {
             throw new NotFoundException("Student with id " + id + " not found");
         }
 
         return new ResponseEntity<>(new StudentOutputDTO(updateStudent), HttpStatus.OK);
     }
+
 }

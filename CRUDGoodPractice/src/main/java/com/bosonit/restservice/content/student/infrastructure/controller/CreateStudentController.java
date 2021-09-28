@@ -1,6 +1,6 @@
 package com.bosonit.restservice.content.student.infrastructure.controller;
 
-import com.bosonit.restservice.content.persona.domain.noDatabase.SavePersona;
+import com.bosonit.restservice.content.person.domain.noDatabase.SavePerson;
 import com.bosonit.restservice.content.student.application.port.CreateStudentPort;
 import com.bosonit.restservice.content.student.domain.Student;
 import com.bosonit.restservice.content.student.domain.noDatabase.SaveStudent;
@@ -55,7 +55,7 @@ public class CreateStudentController {
         }
 
         SaveStudent saveStudent = studentInputDTO.student(new SaveStudent());
-        SavePersona savePersona = studentInputDTO.getId_persona().persona(new SavePersona());
+        SavePerson savePersona = studentInputDTO.getId_persona().persona(new SavePerson());
         Student createStudent = createStudentPort.create(saveStudent, savePersona);
         return new ResponseEntity<>(new StudentOutputDTO(createStudent), HttpStatus.CREATED);
     }

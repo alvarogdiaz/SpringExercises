@@ -46,7 +46,19 @@ public class FindStudentController {
             @PathVariable String branch,
             @RequestParam(defaultValue = "simple", required = false) String outputType)
             throws Exception {
+        findStudentPort.findByBranch(branch);
         return new ResponseEntity<>(findStudentPort.findByBranch(branch).stream()
+                .map(s -> getDTO(outputType, s))
+                .collect(Collectors.toList()), HttpStatus.OK);
+    }
+
+    @GetMapping("teacher/{id}")
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseEntity<List<SimpleStudentOutputDTO>> findByTeacherId(
+            @PathVariable String id,
+            @RequestParam(defaultValue = "simple", required = false) String outputType)
+            throws Exception {
+        return new ResponseEntity<>(findStudentPort.findByTeacherId(id).stream()
                 .map(s -> getDTO(outputType, s))
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
