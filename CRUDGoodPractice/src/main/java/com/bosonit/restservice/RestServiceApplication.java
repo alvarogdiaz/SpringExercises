@@ -2,15 +2,20 @@ package com.bosonit.restservice;
 
 import com.bosonit.restservice.content.person.domain.Person;
 import com.bosonit.restservice.content.person.infrastructure.repository.SavePersonRepository;
+import com.bosonit.restservice.content.student.application.port.UpdateStudentPort;
 import com.bosonit.restservice.content.student.domain.Student;
 import com.bosonit.restservice.content.student.infrastructure.repository.FindStudentRepository;
 import com.bosonit.restservice.content.student.infrastructure.repository.SaveStudentRepository;
+import com.bosonit.restservice.content.subject.domain.Subject;
+import com.bosonit.restservice.content.subject.infrastructure.repository.SaveSubjectRepository;
 import com.bosonit.restservice.content.teacher.domain.Teacher;
 import com.bosonit.restservice.content.teacher.infrastructure.repository.SaveTeacherRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +32,9 @@ public class RestServiceApplication {
 	public CommandLineRunner add(SavePersonRepository savePersonRepository,
 								 SaveStudentRepository saveStudentRepository,
 								 SaveTeacherRepository saveTeacherRepository,
-								 FindStudentRepository findStudentRepository) {
+								 SaveSubjectRepository saveSubjectRepository,
+								 FindStudentRepository findStudentRepository,
+								 UpdateStudentPort updateStudentPort) {
 		return args -> {
 			Person p1 = new Person();
 			p1.setActive(true);
@@ -57,24 +64,30 @@ public class RestServiceApplication {
 			teacher.setComments("");
 			teacher.setId_persona(p1);
 
+			teacher = saveTeacherRepository.save(teacher);
+
 			Student student = new Student();
 			student.setBranch("Backend");
 			student.setComments("");
 			student.setNum_hours_week(31);
 			student.setId_persona(p2);
-
-			/*student = saveStudentRepository.save(student);
-			findStudentRepository.findByBranch("Backend");
-
-			teacher = saveTeacherRepository.save(teacher);
-
 			student.setTeacher(teacher);
+
+			Set<Subject> sub = new HashSet<>();
+			Subject subject = new Subject();
+			subject.setAsignatura("Mates");
+			subject.setComments("nothing");
+
+			Set<Student> stu = new HashSet<>();
+
+			sub.add(subject);
+			//stu.add(student);
+
+			student.setSubjects(sub);
+			//subject.setStudents(stu);
+
 			student = saveStudentRepository.save(student);
-
-			findStudentRepository.findByBranch("Backend");*/
-
-			//teacher.addStudent(student);
-			//teacher = saveTeacherRepository.save(teacher);
+			findStudentRepository.findBySubjectId("1");
 		};
 	}
 }

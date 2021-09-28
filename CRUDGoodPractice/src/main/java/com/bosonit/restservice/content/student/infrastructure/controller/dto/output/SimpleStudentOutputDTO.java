@@ -16,17 +16,16 @@ public class SimpleStudentOutputDTO implements Serializable {
     protected Integer num_hours_week;
 
     public SimpleStudentOutputDTO(Student student) {
-        this.setId_student(student.getId_student());
+        this.setId_student(student.getId());
         this.setBranch(student.getBranch());
         this.setComments(student.getComments());
         this.setNum_hours_week(student.getNum_hours_week());
     }
 
     public SimpleStudentOutputDTO(StudentJpa studentJpa) {
-        this.setId_student(studentJpa.getId_student());
+        this.setId_student(studentJpa.getId());
         this.setBranch(studentJpa.getBranch());
         this.setComments(studentJpa.getComments());
         this.setNum_hours_week(studentJpa.getNum_hours_week());
     }
-
 }

@@ -14,21 +14,21 @@ import java.util.stream.Collectors;
 @Getter
 public class SubjectOutputDTO extends SimpleSubjectOutputDTO
         implements Serializable {
-    protected Set<SimpleStudentOutputDTO> students;
+    //protected Set<SimpleStudentOutputDTO> students;
 
     public SubjectOutputDTO(Subject subject) {
         super(subject);
-        if (subject.getStudents() != null)
+        /*if (subject.getStudents() != null)
             this.setStudents(subject.getStudents().stream()
                     .map(SimpleStudentOutputDTO::new)
-                    .collect(Collectors.toSet()));
+                    .collect(Collectors.toSet()));*/
     }
 
     public SubjectOutputDTO(SubjectJpa subjectJpa) {
         super(subjectJpa);
-        if (subjectJpa.getStudents() != null)
+        /*if (subjectJpa.getStudents() != null)
             this.setStudents(subjectJpa.getStudents().stream()
                     .map(SimpleStudentOutputDTO::new)
-                    .collect(Collectors.toSet()));
+                    .collect(Collectors.toSet()));*/
     }
 }

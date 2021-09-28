@@ -18,14 +18,10 @@ public class StudentOutputDTO extends SimpleStudentOutputDTO
         implements Serializable {
     protected PersonOutputDTO id_persona;
     protected SimpleTeacherOutputDTO id_profesor;
-    //protected Set<SimpleSubjectOutputDTO> subjects;
 
     public StudentOutputDTO(Student student) {
         super(student);
         this.setId_persona(new PersonOutputDTO(student.getId_persona()));
-        /*this.setSubjects(student.getSubjects().stream()
-                .map(SimpleSubjectOutputDTO::new)
-                .collect(Collectors.toSet()));*/
         if (student.getTeacher() != null)
             this.setId_profesor(new SimpleTeacherOutputDTO(student.getTeacher()));
     }
@@ -33,9 +29,6 @@ public class StudentOutputDTO extends SimpleStudentOutputDTO
     public StudentOutputDTO(StudentJpa studentJpa) {
         super(studentJpa);
         this.setId_persona(new PersonOutputDTO(studentJpa.getId_persona()));
-        /*this.setSubjects(studentJpa.getSubjects().stream()
-                .map(SimpleSubjectOutputDTO::new)
-                .collect(Collectors.toSet()));*/
         if (studentJpa.getTeacher() != null)
             this.setId_profesor(new SimpleTeacherOutputDTO(studentJpa.getTeacher()));
     }

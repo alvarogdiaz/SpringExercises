@@ -22,7 +22,7 @@ public class StudentJpa implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id_student;
+    private String id;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "persona")
@@ -49,16 +49,17 @@ public class StudentJpa implements Serializable {
     private Set<SubjectJpa> subjects = new HashSet<>();
 
     public StudentJpa(Student student) {
-        this.id_student = student.getId_student();
+        this.id = student.getId();
         this.id_persona = new PersonJpa(student.getId_persona());
         if (student.getTeacher() != null)
             this.teacher = new TeacherJpa(student.getTeacher());
         this.num_hours_week = student.getNum_hours_week();
         this.branch = student.getBranch();
         this.comments = student.getComments();
-        /*this.subjects = student.getSubjects().stream()
-                .map(SubjectJpa::new)
-                .collect(Collectors.toSet());*/
+        if (student.getSubjects() != null)
+            this.subjects.addAll(student.getSubjects().stream()
+                    .map(SubjectJpa::new)
+                    .collect(Collectors.toSet()));
     }
 
 }

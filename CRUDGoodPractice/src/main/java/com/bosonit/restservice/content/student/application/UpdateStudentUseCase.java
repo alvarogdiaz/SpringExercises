@@ -2,10 +2,7 @@ package com.bosonit.restservice.content.student.application;
 
 import com.bosonit.restservice.content.person.domain.Person;
 import com.bosonit.restservice.content.subject.domain.Subject;
-import com.bosonit.restservice.content.subject.domain.noDatabase.SaveSubject;
-import com.bosonit.restservice.content.subject.infrastructure.controller.dto.input.SimpleSubjectInputDTO;
 import com.bosonit.restservice.content.subject.infrastructure.repository.port.FindSubjectPort;
-import com.bosonit.restservice.content.subject.infrastructure.repository.port.SaveSubjectPort;
 import com.bosonit.restservice.content.teacher.domain.Teacher;
 import com.bosonit.restservice.content.teacher.infrastructure.repository.port.FindTeacherPort;
 import com.bosonit.restservice.content.student.application.port.UpdateStudentPort;
@@ -15,10 +12,15 @@ import com.bosonit.restservice.content.person.infrastructure.repository.port.Fin
 import com.bosonit.restservice.content.student.infrastructure.repository.port.FindStudentPort;
 import com.bosonit.restservice.content.student.infrastructure.repository.port.SaveStudentPort;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Slf4j
 @Service
 @AllArgsConstructor
 public class UpdateStudentUseCase implements UpdateStudentPort {
@@ -28,7 +30,6 @@ public class UpdateStudentUseCase implements UpdateStudentPort {
     private FindTeacherPort findTeacherPort;
     private FindSubjectPort findSubjectPort;
     private FindPersonPort findPersonPort;
-    private SaveSubjectPort saveSubjectPort;
 
     @Override
     public Student update(String id_student, Integer id_person, String id_profesor, SaveStudent saveStudent)
@@ -54,23 +55,36 @@ public class UpdateStudentUseCase implements UpdateStudentPort {
     }
 
     @Override
-    public Student addSubject(String id_student, SaveSubject saveSubject) throws Exception {
-        Student student = findStudentPort.findById(id_student);
-
-        Subject subject = new Subject();
-        subject.update(saveSubject);
-        subject = saveSubjectPort.save(subject);
-
-        student.addSubject(subject);
-        return saveStudentPort.save(student);
-    }
-
-    @Override
     public Student addSubject(String id_student, String id_subject) throws Exception {
         Student student = findStudentPort.findById(id_student);
         Subject subject = findSubjectPort.findById(id_subject);
 
-        student.addSubject(subject);
+        Set<Subject> sub = new HashSet<>();
+
+        if (student.getSubjects() != null)
+            sub.addAll(student.getSubjects());
+
+        sub.add(subject);
+        student.setSubjects(sub);
+
+        return saveStudentPort.save(student);
+    }
+
+    @Override
+    public Student addSubjects(String id_student, List<String> id_subject) throws Exception {
+        Student student = findStudentPort.findById(id_student);
+
+        Set<Subject> subjects = student.getSubjects();
+        if (subjects == null) {
+            subjects = new HashSet<>();
+        }
+
+        for (String s : id_subject) {
+            subjects.add(findSubjectPort.findById(s));
+        }
+
+        student.setSubjects(subjects);
+
         return saveStudentPort.save(student);
     }
 

@@ -4,7 +4,6 @@ import com.bosonit.restservice.content.subject.application.port.CreateSubjectPor
 import com.bosonit.restservice.content.subject.domain.Subject;
 import com.bosonit.restservice.content.subject.domain.noDatabase.SaveSubject;
 import com.bosonit.restservice.content.subject.infrastructure.controller.dto.input.SimpleSubjectInputDTO;
-import com.bosonit.restservice.content.subject.infrastructure.controller.dto.input.SubjectInputDTO;
 import com.bosonit.restservice.content.subject.infrastructure.controller.dto.output.SubjectOutputDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,23 +37,7 @@ public class CreateSubjectController {
         }
 
         SaveSubject saveSubject = subjectInputDTO.subject(new SaveSubject());
-        Subject createSubject = createSubjectPort.create(saveSubject, null);
-        return new ResponseEntity<>(new SubjectOutputDTO(createSubject), HttpStatus.CREATED);
-    }
-
-    @PostMapping("add")
-    @Transactional(rollbackFor = Exception.class)
-    public ResponseEntity<?> create(
-            @Valid @RequestBody SubjectInputDTO subjectInputDTO,
-            Errors errors)
-            throws Exception {
-        if (errors.hasErrors()) {
-            throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,
-                    errors.getFieldError().getDefaultMessage());
-        }
-
-        SaveSubject saveSubject = subjectInputDTO.subject(new SaveSubject());
-        Subject createSubject = createSubjectPort.create(saveSubject, subjectInputDTO.getId_student());
+        Subject createSubject = createSubjectPort.create(saveSubject);
         return new ResponseEntity<>(new SubjectOutputDTO(createSubject), HttpStatus.CREATED);
     }
 }

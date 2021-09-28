@@ -38,4 +38,11 @@ public class FindSubjectRepository implements FindSubjectPort {
                 .map(Subject::new)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Subject> findByStudentsId(String id) throws Exception {
+        return subjectRepositoryJpa.findAllByStudentsId(id).stream()
+                .map(Subject::new)
+                .collect(Collectors.toList());
+    }
 }

@@ -35,7 +35,7 @@ public class TeacherJpa implements Serializable {
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL,
             orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<StudentJpa> students = new HashSet<>();
+    private Set<StudentJpa> students;
 
     public TeacherJpa(Teacher teacher) {
         this.id = teacher.getId();
@@ -43,11 +43,6 @@ public class TeacherJpa implements Serializable {
             this.id_persona = new PersonJpa(teacher.getId_persona());
         this.branch = teacher.getBranch();
         this.comments = teacher.getComments();
-        /*System.out.println(teacher);
-        this.students = teacher.getStudents().stream()
-                .map(StudentJpa::new)
-                .collect(Collectors.toSet());
-        System.out.println(students);*/
     }
 
 }

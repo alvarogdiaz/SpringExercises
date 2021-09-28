@@ -19,14 +19,14 @@ public class SimpleSubjectOutputDTO implements Serializable {
 
     public SimpleSubjectOutputDTO(Subject subject) {
         this.setComments(subject.getComments());
-        this.setId_asignatura(subject.getId_asignatura());
+        this.setId_asignatura(subject.getId());
         this.setFinish_date(subject.getFinish_date());
         this.setInitial_date(subject.getInitial_date());
         this.setAsignatura(subject.getAsignatura());
     }
 
     public SimpleSubjectOutputDTO(SubjectJpa subjectJpa) {
-        this.setId_asignatura(subjectJpa.getId_asignatura());
+        this.setId_asignatura(subjectJpa.getId());
         this.setFinish_date(subjectJpa.getFinish_date());
         this.setInitial_date(subjectJpa.getInitial_date());
         this.setAsignatura(subjectJpa.getAsignatura());

@@ -29,13 +29,10 @@ public class Teacher {
     public Teacher(TeacherJpa teacherJpa) {
         if (teacherJpa == null) return;
 
+        this.teacherJpa = teacherJpa;
         this.id = teacherJpa.getId();
         this.id_persona = new Person(teacherJpa.getId_persona());
         this.branch = teacherJpa.getBranch();
-        /*this.students = teacherJpa.getStudents().stream()
-                .map(Student::new)
-                .collect(Collectors.toSet());
-        */
         this.comments = teacherJpa.getComments();
     }
 

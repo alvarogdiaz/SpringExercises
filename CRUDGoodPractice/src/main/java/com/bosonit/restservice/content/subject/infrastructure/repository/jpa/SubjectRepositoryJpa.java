@@ -10,5 +10,6 @@ import java.util.List;
 public interface SubjectRepositoryJpa extends JpaRepository<SubjectJpa, String> {
 
     List<SubjectJpa> findAllByAsignatura(String asignatura);
+    List<SubjectJpa> findAllByStudentsId(String id);
 
 }

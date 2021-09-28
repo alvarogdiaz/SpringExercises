@@ -1,6 +1,5 @@
 package com.bosonit.restservice.content.subject.domain;
 
-import com.bosonit.restservice.content.student.domain.Student;
 import com.bosonit.restservice.content.subject.domain.noDatabase.SaveSubject;
 import com.bosonit.restservice.content.subject.infrastructure.controller.dto.input.SimpleSubjectInputDTO;
 
@@ -19,8 +18,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class Subject {
 
-    private String id_asignatura;
-    private Set<Student> students = new HashSet<>();
+    private String id;
 
     private String asignatura;
     private String comments;
@@ -32,11 +30,8 @@ public class Subject {
     public Subject(SubjectJpa subjectJpa) {
         if (subjectJpa == null) return;
 
-        this.id_asignatura = subjectJpa.getId_asignatura();
-        if (subjectJpa.getStudents() != null)
-            this.students = subjectJpa.getStudents().stream()
-                .map(Student::new)
-                .collect(Collectors.toSet());
+        this.subjectJpa = subjectJpa;
+        this.id = subjectJpa.getId();
         this.initial_date = subjectJpa.getInitial_date();
         this.asignatura = subjectJpa.getAsignatura();
         this.finish_date = subjectJpa.getFinish_date();
@@ -58,14 +53,5 @@ public class Subject {
             this.comments = saveSubject.getComments();
         if (saveSubject.getInitial_date() != null)
             this.initial_date = saveSubject.getInitial_date();
-        if (saveSubject.getStudents() != null)
-            this.students = saveSubject.getStudents();
-    }
-
-    public void addStudent(Student student) {
-        if (this.students == null)
-            this.students = new HashSet<>();
-
-        this.students.add(student);
     }
 }

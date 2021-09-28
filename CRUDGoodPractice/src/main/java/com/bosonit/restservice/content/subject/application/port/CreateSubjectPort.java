@@ -4,5 +4,5 @@ import com.bosonit.restservice.content.subject.domain.Subject;
 import com.bosonit.restservice.content.subject.domain.noDatabase.SaveSubject;
 
 public interface CreateSubjectPort {
-    Subject create(SaveSubject saveSubject, String id_person) throws Exception;
+    Subject create(SaveSubject saveSubject) throws Exception;
 }

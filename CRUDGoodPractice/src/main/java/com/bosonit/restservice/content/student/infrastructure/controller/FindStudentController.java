@@ -63,6 +63,17 @@ public class FindStudentController {
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
 
+    @GetMapping("subject/{id}")
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseEntity<List<SimpleStudentOutputDTO>> findSubjects(
+            @PathVariable String id,
+            @RequestParam(defaultValue = "simple", required = false) String outputType)
+            throws Exception {
+        return new ResponseEntity<>(findStudentPort.findBySubjectId(id).stream()
+                .map(s -> getDTO(outputType, s))
+                .collect(Collectors.toList()), HttpStatus.OK);
+    }
+
     private SimpleStudentOutputDTO getDTO(String output, Student student) {
         return output.equals("simple") ? new SimpleStudentOutputDTO(student)
                 : new StudentOutputDTO(student);

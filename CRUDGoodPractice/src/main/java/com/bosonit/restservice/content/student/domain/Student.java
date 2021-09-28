@@ -11,6 +11,7 @@ import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Setter
@@ -21,7 +22,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class Student {
 
-    private String id_student;
+    private String id;
     private Person id_persona;
     private Teacher teacher;
 
@@ -36,13 +37,18 @@ public class Student {
     public Student(StudentJpa studentJpa) {
         if (studentJpa == null) return;
 
-        this.id_student = studentJpa.getId_student();
+        this.studentJpa = studentJpa;
+        this.id = studentJpa.getId();
         this.id_persona = new Person(studentJpa.getId_persona());
         if (studentJpa.getTeacher() != null)
             this.teacher = new Teacher(studentJpa.getTeacher());
         this.num_hours_week = studentJpa.getNum_hours_week();
         this.branch = studentJpa.getBranch();
         this.comments = studentJpa.getComments();
+        if (studentJpa.getSubjects() != null)
+            this.subjects.addAll(studentJpa.getSubjects().stream()
+                .map(Subject::new)
+                .collect(Collectors.toSet()));
     }
 
     public Student(StudentInputDTO studentInputDTO) {
@@ -62,9 +68,5 @@ public class Student {
             this.comments = saveStudent.getComments();
         if (saveStudent.getNum_hours_week() != null)
             this.num_hours_week = saveStudent.getNum_hours_week();
-    }
-
-    public void addSubject(Subject subject) {
-        subjects.add(subject);
     }
 }

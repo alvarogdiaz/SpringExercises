@@ -1,6 +1,5 @@
 package com.bosonit.restservice.content.subject.application;
 
-import com.bosonit.restservice.content.student.infrastructure.repository.port.FindStudentPort;
 import com.bosonit.restservice.content.subject.application.port.CreateSubjectPort;
 import com.bosonit.restservice.content.subject.domain.Subject;
 import com.bosonit.restservice.content.subject.domain.noDatabase.SaveSubject;
@@ -13,13 +12,10 @@ import org.springframework.stereotype.Service;
 public class CreateSubjectUseCase implements CreateSubjectPort {
 
     private SaveSubjectPort saveSubjectPort;
-    private FindStudentPort findStudentPort;
 
     @Override
-    public Subject create(SaveSubject saveSubject, String id_student) throws Exception {
+    public Subject create(SaveSubject saveSubject) throws Exception {
         Subject subject = new Subject();
-        if (id_student != null)
-            subject.addStudent(findStudentPort.findById(id_student));
         subject.update(saveSubject);
 
         return saveSubjectPort.save(subject);

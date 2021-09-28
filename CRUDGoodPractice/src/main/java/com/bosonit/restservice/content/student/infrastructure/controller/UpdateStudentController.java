@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/student")
@@ -51,17 +52,6 @@ public class UpdateStudentController {
         return new ResponseEntity<>(new StudentOutputDTO(updateStudent), HttpStatus.OK);
     }
 
-    /*@PutMapping("subject/{id}")
-    @Transactional(rollbackFor = Exception.class)
-    public ResponseEntity<StudentOutputDTO> addSubject(
-            @PathVariable String id,
-            @RequestBody SimpleSubjectInputDTO simpleSubjectInputDTO)
-            throws Exception {
-        SaveSubject saveSubject = simpleSubjectInputDTO.subject(new SaveSubject());
-        Student student = updateStudentPort.addSubject(id, saveSubject);
-        return new ResponseEntity<>(new StudentOutputDTO(student), HttpStatus.OK);
-    }*/
-
     @PutMapping("subject/{id}/{subject}")
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<StudentOutputDTO> addSubject(
@@ -69,6 +59,16 @@ public class UpdateStudentController {
             @PathVariable(name = "subject") String id_subject)
             throws Exception {
         Student student = updateStudentPort.addSubject(id_student, id_subject);
+        return new ResponseEntity<>(new StudentOutputDTO(student), HttpStatus.OK);
+    }
+
+    @PutMapping("subject/{id}")
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseEntity<StudentOutputDTO> addSubjects(
+            @PathVariable(name = "id") String id_student,
+            @RequestBody List<String> id_subjects)
+            throws Exception {
+        Student student = updateStudentPort.addSubjects(id_student, id_subjects);
         return new ResponseEntity<>(new StudentOutputDTO(student), HttpStatus.OK);
     }
 

@@ -16,14 +16,15 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "ASIGNATURA")
+@Table(name = "SUBJECT")
 public class SubjectJpa implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id_asignatura;
+    private String id;
 
-    @ManyToMany(mappedBy = "subjects", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "subjects", cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private Set<StudentJpa> students = new HashSet<>();
 
     @Column
@@ -41,12 +42,8 @@ public class SubjectJpa implements Serializable {
     public SubjectJpa(Subject subject) {
         this.asignatura = subject.getAsignatura();
         this.initial_date = subject.getInitial_date();
-        if (subject.getStudents() != null)
-            this.students = subject.getStudents().stream()
-                    .map(StudentJpa::new)
-                    .collect(Collectors.toSet());
         this.finish_date = subject.getFinish_date();
-        this.id_asignatura = subject.getId_asignatura();
+        this.id = subject.getId();
         this.comments = subject.getComments();
     }
 }

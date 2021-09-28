@@ -42,11 +42,22 @@ public class FindSubjectController {
 
     @GetMapping("subject/{subject}")
     @Transactional(rollbackFor = Exception.class)
-    public ResponseEntity<List<SimpleSubjectOutputDTO>> findByBranch(
+    public ResponseEntity<List<SimpleSubjectOutputDTO>> findByName(
             @PathVariable String subject,
             @RequestParam(defaultValue = "simple", required = false) String outputType)
             throws Exception {
         return new ResponseEntity<>(findSubjectPort.findBySubject(subject).stream()
+                .map(s -> getDTO(outputType, s))
+                .collect(Collectors.toList()), HttpStatus.OK);
+    }
+
+    @GetMapping("student/{id}")
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseEntity<List<SimpleSubjectOutputDTO>> findByStudentId(
+            @PathVariable String id,
+            @RequestParam(defaultValue = "simple", required = false) String outputType)
+            throws Exception {
+        return new ResponseEntity<>(findSubjectPort.findByStudentsId(id).stream()
                 .map(s -> getDTO(outputType, s))
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
