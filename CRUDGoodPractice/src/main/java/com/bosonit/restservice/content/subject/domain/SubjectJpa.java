@@ -23,8 +23,10 @@ public class SubjectJpa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
-    @ManyToMany(mappedBy = "subjects", cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = StudentJpa.class, cascade = {
+            CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.PERSIST},
+            fetch = FetchType.LAZY)
     private Set<StudentJpa> students;
 
     @Column

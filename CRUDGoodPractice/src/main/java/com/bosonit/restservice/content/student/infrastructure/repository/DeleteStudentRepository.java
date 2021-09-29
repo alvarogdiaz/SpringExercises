@@ -1,9 +1,13 @@
 package com.bosonit.restservice.content.student.infrastructure.repository;
 
+import com.bosonit.restservice.content.student.domain.Student;
 import com.bosonit.restservice.content.student.infrastructure.repository.jpa.StudentRepositoryJpa;
 import com.bosonit.restservice.content.student.infrastructure.repository.port.DeleteStudentPort;
+import com.bosonit.restservice.content.student.infrastructure.repository.port.FindStudentPort;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.client.HttpClientErrorException;
 
 @Repository
 @AllArgsConstructor

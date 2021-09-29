@@ -42,8 +42,9 @@ public class StudentJpa implements Serializable {
     @Column(nullable = false)
     private String branch;
 
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE },
-            fetch = FetchType.LAZY)
+    @ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.PERSIST },
+            fetch = FetchType.LAZY, targetEntity = SubjectJpa.class)
     @JoinTable(name = "student_subjects",
                 joinColumns = {@JoinColumn(name = "id_student")},
                 inverseJoinColumns = {@JoinColumn(name = "id_subject")})
