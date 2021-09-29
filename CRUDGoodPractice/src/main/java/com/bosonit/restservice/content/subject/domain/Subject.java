@@ -6,9 +6,7 @@ import com.bosonit.restservice.content.subject.infrastructure.controller.dto.inp
 
 import lombok.*;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Setter
@@ -26,7 +24,7 @@ public class Subject {
     private Date initial_date = new Date();
     private Date finish_date;
 
-    private Set<Student> students = new HashSet<>();
+    private List<Student> students = new ArrayList<>();
 
     private SubjectJpa subjectJpa;
 
@@ -39,9 +37,6 @@ public class Subject {
         this.asignatura = subjectJpa.getAsignatura();
         this.finish_date = subjectJpa.getFinish_date();
         this.comments = subjectJpa.getComments();
-        this.students = subjectJpa.getStudents().stream()
-                .map(Student::new)
-                .collect(Collectors.toSet());
     }
 
     public Subject(SimpleSubjectInputDTO subjectInputDTO) {

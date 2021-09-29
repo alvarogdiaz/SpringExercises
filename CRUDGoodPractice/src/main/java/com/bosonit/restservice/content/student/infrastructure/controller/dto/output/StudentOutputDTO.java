@@ -21,14 +21,16 @@ public class StudentOutputDTO extends SimpleStudentOutputDTO
 
     public StudentOutputDTO(Student student) {
         super(student);
-        this.setId_persona(new PersonOutputDTO(student.getId_persona()));
+        if (student.getId_persona() != null)
+            this.setId_persona(new PersonOutputDTO(student.getId_persona()));
         if (student.getTeacher() != null)
             this.setId_profesor(new SimpleTeacherOutputDTO(student.getTeacher()));
     }
 
     public StudentOutputDTO(StudentJpa studentJpa) {
         super(studentJpa);
-        this.setId_persona(new PersonOutputDTO(studentJpa.getId_persona()));
+        if (studentJpa.getId_persona() != null)
+            this.setId_persona(new PersonOutputDTO(studentJpa.getId_persona()));
         if (studentJpa.getTeacher() != null)
             this.setId_profesor(new SimpleTeacherOutputDTO(studentJpa.getTeacher()));
     }

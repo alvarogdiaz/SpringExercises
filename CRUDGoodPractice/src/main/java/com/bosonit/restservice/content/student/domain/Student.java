@@ -10,6 +10,7 @@ import com.bosonit.restservice.content.student.infrastructure.controller.dto.inp
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 public class Student {
 
     private String id;
+
     private Person id_persona;
     private Teacher teacher;
 
@@ -31,7 +33,7 @@ public class Student {
     private String comments;
     private String branch;
 
-    private Set<Subject> subjects = new HashSet<>();
+    private List<Subject> subjects;
 
     private StudentJpa studentJpa;
 
@@ -46,10 +48,10 @@ public class Student {
         this.num_hours_week = studentJpa.getNum_hours_week();
         this.branch = studentJpa.getBranch();
         this.comments = studentJpa.getComments();
-        if (studentJpa.getSubjects() != null && studentJpa.getSubjects().size() != 0)
-            this.subjects.addAll(studentJpa.getSubjects().stream()
+        if (studentJpa.getSubjects() != null)
+            this.subjects = studentJpa.getSubjects().stream()
                 .map(Subject::new)
-                .collect(Collectors.toSet()));
+                .collect(Collectors.toList());
     }
 
     public Student(StudentInputDTO studentInputDTO) {

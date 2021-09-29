@@ -11,6 +11,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -25,11 +26,11 @@ public class SubjectJpa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
-    @ManyToMany(mappedBy = "subjects", cascade = {
+    @ManyToMany(mappedBy = "subjects"/*, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST},
-            fetch = FetchType.LAZY)
-    private Set<StudentJpa> students = new HashSet<>();
+            fetch = FetchType.LAZY*/)
+    private List<StudentJpa> students;// = new HashSet<>();
 
     @Column
     private String asignatura;
@@ -51,6 +52,6 @@ public class SubjectJpa implements Serializable {
         this.comments = subject.getComments();
         this.students = subject.getStudents().stream()
                 .map(StudentJpa::new)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 }

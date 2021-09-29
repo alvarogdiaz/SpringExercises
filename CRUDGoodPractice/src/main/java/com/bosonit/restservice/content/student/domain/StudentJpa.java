@@ -15,7 +15,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -43,14 +44,13 @@ public class StudentJpa implements Serializable {
     @Column(nullable = false)
     private String branch;
 
-
-    @ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE,
+    @ManyToMany( cascade = CascadeType.ALL)/*(cascade = { CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST },
-            fetch = FetchType.LAZY)
+            fetch = FetchType.LAZY)*/
     @JoinTable(name = "student_subjects",
                 joinColumns = {@JoinColumn(name = "id_student")},
                 inverseJoinColumns = {@JoinColumn(name = "id_subject")})
-    private Set<SubjectJpa> subjects = new HashSet<>();
+    private List<SubjectJpa> subjects;
 
     public StudentJpa(Student student) {
         this.id = student.getId();
@@ -60,10 +60,10 @@ public class StudentJpa implements Serializable {
         this.num_hours_week = student.getNum_hours_week();
         this.branch = student.getBranch();
         this.comments = student.getComments();
-        if (student.getSubjects() != null && student.getSubjects().size() != 0) {
-            this.subjects.addAll(student.getSubjects().stream()
+        if (student.getSubjects() != null) {
+            this.subjects=student.getSubjects().stream()
                     .map(SubjectJpa::new)
-                    .collect(Collectors.toSet()));
+                    .collect(Collectors.toList());
         }
     }
 

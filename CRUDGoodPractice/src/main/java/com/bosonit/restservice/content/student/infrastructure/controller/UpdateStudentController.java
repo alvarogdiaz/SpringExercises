@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @RestController
 @RequestMapping("api/student")
@@ -53,7 +55,7 @@ public class UpdateStudentController {
             @PathVariable(name = "id") String id_student,
             @PathVariable(name = "subject") String id_subject)
             throws Exception {
-        Student student = updateStudentPort.addSubjects(id_student, new String[] {id_subject});
+        Student student = updateStudentPort.addSubjects(id_student, new ArrayList<String>(Arrays.asList(id_subject)));
         return new ResponseEntity<>(new StudentOutputDTO(student), HttpStatus.OK);
     }
 
@@ -63,7 +65,7 @@ public class UpdateStudentController {
             @PathVariable(name = "id") String id_student,
             @RequestParam String[] id_subjects)
             throws Exception {
-        Student student = updateStudentPort.addSubjects(id_student, id_subjects);
+        Student student = updateStudentPort.addSubjects(id_student, new ArrayList<String>(Arrays.asList(id_subjects)));
         return new ResponseEntity<>(new StudentOutputDTO(student), HttpStatus.OK);
     }
 
@@ -73,7 +75,7 @@ public class UpdateStudentController {
             @PathVariable(name = "id") String id_student,
             @PathVariable(name = "subject") String id_subject)
             throws Exception {
-        Student student = updateStudentPort.unsubscribeSubjects(id_student, new String[]{id_subject});
+        Student student = updateStudentPort.unsubscribeSubjects(id_student, new ArrayList<String>(Arrays.asList(id_subject)));
         return new ResponseEntity<>(new StudentOutputDTO(student), HttpStatus.OK);
     }
 
@@ -83,7 +85,7 @@ public class UpdateStudentController {
             @PathVariable(name = "id") String id_student,
             @RequestParam String[] id_subjects)
             throws Exception {
-        Student student = updateStudentPort.unsubscribeSubjects(id_student, id_subjects);
+        Student student = updateStudentPort.unsubscribeSubjects(id_student, new ArrayList<String>(Arrays.asList(id_subjects)));
         return new ResponseEntity<>(new StudentOutputDTO(student), HttpStatus.OK);
     }
 

@@ -12,7 +12,6 @@ import com.bosonit.restservice.content.person.infrastructure.repository.port.Fin
 import com.bosonit.restservice.content.student.infrastructure.repository.port.FindStudentPort;
 import com.bosonit.restservice.content.student.infrastructure.repository.port.SaveStudentPort;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -54,32 +53,29 @@ public class UpdateStudentUseCase implements UpdateStudentPort {
     }
 
     @Override
-    public Student addSubjects(String id_student, String[] id_subject) throws Exception {
+    public Student addSubjects(String id_student, List<String> id_subject) throws Exception {
         Student student = findStudentPort.findById(id_student);
 
         Set<Subject> subjects = new HashSet<>();
 
         for (String s : id_subject) {
-            student.getSubjects().add(findSubjectPort.findById(s));
+            subjects.add(findSubjectPort.findById(s));
         }
 
+        subjects.removeAll(student.getSubjects());
         student.getSubjects().addAll(subjects);
 
         return saveStudentPort.save(student);
     }
 
     @Override
-    public Student unsubscribeSubjects(String id_student, String[] id_subject) throws Exception {
+    public Student unsubscribeSubjects(String id_student, List<String> id_subject) throws Exception {
         Student student = findStudentPort.findById(id_student);
-
-        Set<Subject> subjects = new HashSet<>();
 
         if (student.getSubjects() == null || student.getSubjects().size() == 0) {
             throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,
                     "The student " + id_student + " isn't subscribed to any subject");
         }
-
-        subjects.addAll(student.getSubjects());
 
         Set<Subject> remove = new HashSet<>();
 
@@ -87,20 +83,10 @@ public class UpdateStudentUseCase implements UpdateStudentPort {
             remove.add(findSubjectPort.findById(s));
         }
 
-        int size = subjects.size();
-        remove.stream().forEach(s -> {
-            if (subjects.contains(s)) {
-                subjects.remove(s);
-            }
-        });
-
-        if (size == subjects.size()) {
+        if (!student.getSubjects().removeAll(remove)) {
             throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,
-                    "The student " + id_student + " isn't subscribed to any of the subjects specified: "
-                            + id_student.toString());
+                    "The student " + id_student + " isn't subscribed to any of the subjects specified");
         }
-
-        student.setSubjects(subjects);
 
         return saveStudentPort.save(student);
     }
