@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 public class FindPersonController {
 
     private FindPersonPort findPersonPort;
-    private RestTemplate restTemplate;
     private Environment environment;
 
     @GetMapping("{id}")
@@ -67,11 +66,12 @@ public class FindPersonController {
 
     @GetMapping("teacher/{id}")
     @Transactional(rollbackFor = Exception.class)
-    public ResponseEntity<SimpleTeacherOutputDTO> getTeacher(@PathVariable String id)
-            throws Exception {
-        String port = environment.getProperty("server.port");
-        if (port == null)
-            port = "8080";
+    public ResponseEntity<SimpleTeacherOutputDTO> getTeacher(@PathVariable String id) {
+        String port;
+        if (environment.getProperty("server.port") == null)
+            port = "8081";
+        else
+            port = environment.getProperty("server.port").equals("8080") ? "8081" : "8080";
 
         ResponseEntity<SimpleTeacherOutputDTO> tea = new RestTemplate().getForEntity("http://localhost:" + port + "/api/teacher/" + id,
                 SimpleTeacherOutputDTO.class);
