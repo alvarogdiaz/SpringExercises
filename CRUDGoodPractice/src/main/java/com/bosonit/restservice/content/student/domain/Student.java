@@ -10,6 +10,7 @@ import com.bosonit.restservice.content.student.infrastructure.controller.dto.inp
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,7 @@ public class Student {
         this.num_hours_week = studentJpa.getNum_hours_week();
         this.branch = studentJpa.getBranch();
         this.comments = studentJpa.getComments();
-        if (studentJpa.getSubjects() != null)
+        if (studentJpa.getSubjects() != null && studentJpa.getSubjects().size() != 0)
             this.subjects.addAll(studentJpa.getSubjects().stream()
                 .map(Subject::new)
                 .collect(Collectors.toSet()));

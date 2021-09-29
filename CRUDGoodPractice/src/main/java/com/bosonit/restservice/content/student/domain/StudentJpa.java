@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -56,10 +57,11 @@ public class StudentJpa implements Serializable {
         this.num_hours_week = student.getNum_hours_week();
         this.branch = student.getBranch();
         this.comments = student.getComments();
-        if (student.getSubjects() != null)
+        if (student.getSubjects() != null && student.getSubjects().size() != 0) {
             this.subjects.addAll(student.getSubjects().stream()
                     .map(SubjectJpa::new)
                     .collect(Collectors.toSet()));
+        }
     }
 
 }

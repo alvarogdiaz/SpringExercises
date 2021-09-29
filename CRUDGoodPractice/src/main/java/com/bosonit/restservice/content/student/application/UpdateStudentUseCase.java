@@ -20,7 +20,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 @AllArgsConstructor
 public class UpdateStudentUseCase implements UpdateStudentPort {
@@ -71,7 +70,7 @@ public class UpdateStudentUseCase implements UpdateStudentPort {
     }
 
     @Override
-    public Student addSubjects(String id_student, List<String> id_subject) throws Exception {
+    public Student addSubjects(String id_student, String[] id_subject) throws Exception {
         Student student = findStudentPort.findById(id_student);
 
         Set<Subject> subjects = student.getSubjects();
@@ -81,6 +80,68 @@ public class UpdateStudentUseCase implements UpdateStudentPort {
 
         for (String s : id_subject) {
             subjects.add(findSubjectPort.findById(s));
+        }
+
+        student.setSubjects(subjects);
+
+        return saveStudentPort.save(student);
+    }
+
+    @Override
+    public Student unsubscribeSubject(String id_student, String id_subject) throws Exception {
+        Student student = findStudentPort.findById(id_student);
+        Subject subject = findSubjectPort.findById(id_subject);
+
+        Set<Subject> sub = new HashSet<>();
+
+        if (student.getSubjects() == null || student.getSubjects().size() == 0) {
+            throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,
+                    "The student " + id_student + " isn't subscribed to any subject");
+        }
+
+        sub.addAll(student.getSubjects());
+
+        if (!sub.contains(subject)) {
+            throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,
+                    "The student " + id_student + " isn't subscribed to the subject " + id_subject);
+        }
+
+        sub.remove(subject);
+        student.setSubjects(sub);
+
+        return saveStudentPort.save(student);
+    }
+
+    @Override
+    public Student unsubscribeSubjects(String id_student, String[] id_subject) throws Exception {
+        Student student = findStudentPort.findById(id_student);
+
+        Set<Subject> subjects = new HashSet<>();
+
+        if (student.getSubjects() == null || student.getSubjects().size() == 0) {
+            throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,
+                    "The student " + id_student + " isn't subscribed to any subject");
+        }
+
+        subjects.addAll(student.getSubjects());
+
+        Set<Subject> remove = new HashSet<>();
+
+        for (String s : id_subject) {
+            remove.add(findSubjectPort.findById(s));
+        }
+
+        int size = subjects.size();
+        remove.stream().forEach(s -> {
+            if (subjects.contains(s)) {
+                subjects.remove(s);
+            }
+        });
+
+        if (size == subjects.size()) {
+            throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,
+                    "The student " + id_student + " isn't subscribed to any of the subjects specified: "
+                            + id_student.toString());
         }
 
         student.setSubjects(subjects);

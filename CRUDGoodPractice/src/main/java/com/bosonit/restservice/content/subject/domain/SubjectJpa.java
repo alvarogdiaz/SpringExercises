@@ -25,7 +25,7 @@ public class SubjectJpa implements Serializable {
 
     @ManyToMany(mappedBy = "subjects", cascade = {
             CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    private Set<StudentJpa> students = new HashSet<>();
+    private Set<StudentJpa> students;
 
     @Column
     private String asignatura;

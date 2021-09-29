@@ -28,7 +28,7 @@ public class RestServiceApplication {
 		SpringApplication.run(RestServiceApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	public CommandLineRunner add(SavePersonRepository savePersonRepository,
 								 SaveStudentRepository saveStudentRepository,
 								 SaveTeacherRepository saveTeacherRepository,
@@ -87,7 +87,7 @@ public class RestServiceApplication {
 			//subject.setStudents(stu);
 
 			student = saveStudentRepository.save(student);
-			findStudentRepository.findBySubjectId("1");
+			//findStudentRepository.findBySubjectId("1");
 		};
-	}
+	}*/
 }

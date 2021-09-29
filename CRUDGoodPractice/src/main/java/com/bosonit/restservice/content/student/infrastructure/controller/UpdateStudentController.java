@@ -5,10 +5,6 @@ import com.bosonit.restservice.content.student.domain.Student;
 import com.bosonit.restservice.content.student.domain.noDatabase.SaveStudent;
 import com.bosonit.restservice.content.student.infrastructure.controller.dto.input.SimpleStudentInputDTO;
 import com.bosonit.restservice.content.student.infrastructure.controller.dto.output.StudentOutputDTO;
-import com.bosonit.restservice.content.subject.domain.noDatabase.SaveSubject;
-import com.bosonit.restservice.content.subject.infrastructure.controller.dto.input.SimpleSubjectInputDTO;
-import com.bosonit.restservice.content.subject.infrastructure.controller.dto.input.SubjectInputDTO;
-import com.bosonit.restservice.content.teacher.infrastructure.controller.dto.input.SimpleTeacherInputDTO;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("api/student")
@@ -66,9 +61,29 @@ public class UpdateStudentController {
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<StudentOutputDTO> addSubjects(
             @PathVariable(name = "id") String id_student,
-            @RequestBody List<String> id_subjects)
+            @RequestParam String[] id_subjects)
             throws Exception {
         Student student = updateStudentPort.addSubjects(id_student, id_subjects);
+        return new ResponseEntity<>(new StudentOutputDTO(student), HttpStatus.OK);
+    }
+
+    @PutMapping("unsubscribe/{id}/{subject}")
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseEntity<StudentOutputDTO> unsubscribeSubject(
+            @PathVariable(name = "id") String id_student,
+            @PathVariable(name = "subject") String id_subject)
+            throws Exception {
+        Student student = updateStudentPort.unsubscribeSubject(id_student, id_subject);
+        return new ResponseEntity<>(new StudentOutputDTO(student), HttpStatus.OK);
+    }
+
+    @PutMapping("unsubscribe/{id}")
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseEntity<StudentOutputDTO> unsubscribeSubjects(
+            @PathVariable(name = "id") String id_student,
+            @RequestParam String[] id_subjects)
+            throws Exception {
+        Student student = updateStudentPort.unsubscribeSubjects(id_student, id_subjects);
         return new ResponseEntity<>(new StudentOutputDTO(student), HttpStatus.OK);
     }
 
