@@ -2,21 +2,30 @@ package com.bosonit.restservice.content.person.infrastructure.controller;
 
 import com.bosonit.restservice.content.person.infrastructure.controller.dto.output.PersonOutputDTO;
 import com.bosonit.restservice.content.person.infrastructure.repository.port.FindPersonPort;
+import com.bosonit.restservice.content.teacher.infrastructure.controller.dto.output.SimpleTeacherOutputDTO;
+import com.bosonit.restservice.content.teacher.infrastructure.controller.dto.output.TeacherOutputDTO;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("api/person")
 public class FindPersonController {
 
-    @Autowired
     private FindPersonPort findPersonPort;
+    private RestTemplate restTemplate;
+    private Environment environment;
 
     @GetMapping("{id}")
     @Transactional(rollbackFor = Exception.class)
@@ -54,5 +63,19 @@ public class FindPersonController {
         return new ResponseEntity<>(findPersonPort.findAll().stream()
                 .map(PersonOutputDTO::new)
                 .collect(Collectors.toList()), HttpStatus.OK);
+    }
+
+    @GetMapping("teacher/{id}")
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseEntity<SimpleTeacherOutputDTO> getTeacher(@PathVariable String id)
+            throws Exception {
+        String port = environment.getProperty("server.port");
+        if (port == null)
+            port = "8080";
+
+        ResponseEntity<SimpleTeacherOutputDTO> tea = new RestTemplate().getForEntity("http://localhost:" + port + "/api/teacher/" + id,
+                SimpleTeacherOutputDTO.class);
+
+        return new ResponseEntity<>(tea.getBody(), HttpStatus.OK);
     }
 }

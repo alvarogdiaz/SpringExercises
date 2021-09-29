@@ -2,13 +2,17 @@ package com.bosonit.restservice.content.teacher.infrastructure.controller.dto.ou
 
 import com.bosonit.restservice.content.teacher.domain.Teacher;
 import com.bosonit.restservice.content.teacher.domain.TeacherJpa;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
 
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SimpleTeacherOutputDTO implements Serializable {
     protected String id_profesor;
     protected String branch;
