@@ -28,7 +28,7 @@ public class RestServiceApplication {
 		SpringApplication.run(RestServiceApplication.class, args);
 	}
 
-	/*@Bean
+	@Bean
 	public CommandLineRunner add(SavePersonRepository savePersonRepository,
 								 SaveStudentRepository saveStudentRepository,
 								 SaveTeacherRepository saveTeacherRepository,
@@ -73,21 +73,23 @@ public class RestServiceApplication {
 			student.setId_persona(p2);
 			student.setTeacher(teacher);
 
+			Subject subject1 = new Subject();
+			subject1.setAsignatura("Mates");
+			subject1.setComments("nothing");
+
+			Subject subject2 = new Subject();
+			subject2.setAsignatura("Biologia");
+			subject2.setComments("bad");
+
 			Set<Subject> sub = new HashSet<>();
-			Subject subject = new Subject();
-			subject.setAsignatura("Mates");
-			subject.setComments("nothing");
-
-			Set<Student> stu = new HashSet<>();
-
-			sub.add(subject);
-			//stu.add(student);
-
+			sub.add(subject1);
 			student.setSubjects(sub);
-			//subject.setStudents(stu);
 
 			student = saveStudentRepository.save(student);
-			//findStudentRepository.findBySubjectId("1");
+			// TODO BIEN HASTA AQUI
+
+			student.getSubjects().add(subject2);
+			saveStudentRepository.save(student);
 		};
-	}*/
+	}
 }

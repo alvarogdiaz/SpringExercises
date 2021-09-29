@@ -1,5 +1,6 @@
 package com.bosonit.restservice.content.subject.domain;
 
+import com.bosonit.restservice.content.student.domain.Student;
 import com.bosonit.restservice.content.subject.domain.noDatabase.SaveSubject;
 import com.bosonit.restservice.content.subject.infrastructure.controller.dto.input.SimpleSubjectInputDTO;
 
@@ -25,6 +26,8 @@ public class Subject {
     private Date initial_date = new Date();
     private Date finish_date;
 
+    private Set<Student> students = new HashSet<>();
+
     private SubjectJpa subjectJpa;
 
     public Subject(SubjectJpa subjectJpa) {
@@ -36,6 +39,9 @@ public class Subject {
         this.asignatura = subjectJpa.getAsignatura();
         this.finish_date = subjectJpa.getFinish_date();
         this.comments = subjectJpa.getComments();
+        this.students = subjectJpa.getStudents().stream()
+                .map(Student::new)
+                .collect(Collectors.toSet());
     }
 
     public Subject(SimpleSubjectInputDTO subjectInputDTO) {

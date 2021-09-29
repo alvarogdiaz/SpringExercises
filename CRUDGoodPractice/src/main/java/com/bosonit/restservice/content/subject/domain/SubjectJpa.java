@@ -1,6 +1,8 @@
 package com.bosonit.restservice.content.subject.domain;
 
+import com.bosonit.restservice.content.student.domain.Student;
 import com.bosonit.restservice.content.student.domain.StudentJpa;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,11 +25,11 @@ public class SubjectJpa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
-    @ManyToMany(targetEntity = StudentJpa.class, cascade = {
+    @ManyToMany(mappedBy = "subjects", cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST},
             fetch = FetchType.LAZY)
-    private Set<StudentJpa> students;
+    private Set<StudentJpa> students = new HashSet<>();
 
     @Column
     private String asignatura;
@@ -47,5 +49,8 @@ public class SubjectJpa implements Serializable {
         this.finish_date = subject.getFinish_date();
         this.id = subject.getId();
         this.comments = subject.getComments();
+        this.students = subject.getStudents().stream()
+                .map(StudentJpa::new)
+                .collect(Collectors.toSet());
     }
 }

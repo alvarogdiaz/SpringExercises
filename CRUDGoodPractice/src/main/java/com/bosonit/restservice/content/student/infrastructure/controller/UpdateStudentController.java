@@ -53,7 +53,7 @@ public class UpdateStudentController {
             @PathVariable(name = "id") String id_student,
             @PathVariable(name = "subject") String id_subject)
             throws Exception {
-        Student student = updateStudentPort.addSubject(id_student, id_subject);
+        Student student = updateStudentPort.addSubjects(id_student, new String[] {id_subject});
         return new ResponseEntity<>(new StudentOutputDTO(student), HttpStatus.OK);
     }
 
@@ -73,7 +73,7 @@ public class UpdateStudentController {
             @PathVariable(name = "id") String id_student,
             @PathVariable(name = "subject") String id_subject)
             throws Exception {
-        Student student = updateStudentPort.unsubscribeSubject(id_student, id_subject);
+        Student student = updateStudentPort.unsubscribeSubjects(id_student, new String[]{id_subject});
         return new ResponseEntity<>(new StudentOutputDTO(student), HttpStatus.OK);
     }
 

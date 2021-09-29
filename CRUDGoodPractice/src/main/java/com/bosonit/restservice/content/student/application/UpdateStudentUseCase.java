@@ -54,60 +54,16 @@ public class UpdateStudentUseCase implements UpdateStudentPort {
     }
 
     @Override
-    public Student addSubject(String id_student, String id_subject) throws Exception {
-        Student student = findStudentPort.findById(id_student);
-        Subject subject = findSubjectPort.findById(id_subject);
-
-        Set<Subject> sub = new HashSet<>();
-
-        if (student.getSubjects() != null)
-            sub.addAll(student.getSubjects());
-
-        sub.add(subject);
-        student.setSubjects(sub);
-
-        return saveStudentPort.save(student);
-    }
-
-    @Override
     public Student addSubjects(String id_student, String[] id_subject) throws Exception {
         Student student = findStudentPort.findById(id_student);
 
-        Set<Subject> subjects = student.getSubjects();
-        if (subjects == null) {
-            subjects = new HashSet<>();
-        }
+        Set<Subject> subjects = new HashSet<>();
 
         for (String s : id_subject) {
-            subjects.add(findSubjectPort.findById(s));
+            student.getSubjects().add(findSubjectPort.findById(s));
         }
 
-        student.setSubjects(subjects);
-
-        return saveStudentPort.save(student);
-    }
-
-    @Override
-    public Student unsubscribeSubject(String id_student, String id_subject) throws Exception {
-        Student student = findStudentPort.findById(id_student);
-        Subject subject = findSubjectPort.findById(id_subject);
-
-        Set<Subject> sub = new HashSet<>();
-
-        if (student.getSubjects() == null || student.getSubjects().size() == 0) {
-            throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,
-                    "The student " + id_student + " isn't subscribed to any subject");
-        }
-
-        sub.addAll(student.getSubjects());
-
-        if (!sub.contains(subject)) {
-            throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,
-                    "The student " + id_student + " isn't subscribed to the subject " + id_subject);
-        }
-
-        sub.remove(subject);
-        student.setSubjects(sub);
+        student.getSubjects().addAll(subjects);
 
         return saveStudentPort.save(student);
     }

@@ -4,6 +4,7 @@ import com.bosonit.restservice.content.person.domain.PersonJpa;
 import com.bosonit.restservice.content.subject.domain.Subject;
 import com.bosonit.restservice.content.subject.domain.SubjectJpa;
 import com.bosonit.restservice.content.teacher.domain.TeacherJpa;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -42,9 +43,10 @@ public class StudentJpa implements Serializable {
     @Column(nullable = false)
     private String branch;
 
+
     @ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST },
-            fetch = FetchType.LAZY, targetEntity = SubjectJpa.class)
+            fetch = FetchType.LAZY)
     @JoinTable(name = "student_subjects",
                 joinColumns = {@JoinColumn(name = "id_student")},
                 inverseJoinColumns = {@JoinColumn(name = "id_subject")})
