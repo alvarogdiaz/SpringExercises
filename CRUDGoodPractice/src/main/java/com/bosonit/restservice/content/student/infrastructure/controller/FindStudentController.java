@@ -21,7 +21,7 @@ public class FindStudentController {
     private FindStudentPort findStudentPort;
 
     @GetMapping("{id}")
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(readOnly = true)
     public ResponseEntity<SimpleStudentOutputDTO> findById(
             @PathVariable String id,
             @RequestParam(defaultValue = "simple", required = false) String outputType)
@@ -31,7 +31,7 @@ public class FindStudentController {
     }
 
     @GetMapping
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(readOnly = true)
     public ResponseEntity<List<SimpleStudentOutputDTO>> findAll(
             @RequestParam(defaultValue = "simple", required = false) String outputType)
             throws Exception {
@@ -41,7 +41,7 @@ public class FindStudentController {
     }
 
     @GetMapping("branch/{branch}")
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(readOnly = true)
     public ResponseEntity<List<SimpleStudentOutputDTO>> findByBranch(
             @PathVariable String branch,
             @RequestParam(defaultValue = "simple", required = false) String outputType)
@@ -53,7 +53,7 @@ public class FindStudentController {
     }
 
     @GetMapping("teacher/{id}")
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(readOnly = true)
     public ResponseEntity<List<SimpleStudentOutputDTO>> findByTeacherId(
             @PathVariable String id,
             @RequestParam(defaultValue = "simple", required = false) String outputType)
@@ -64,7 +64,7 @@ public class FindStudentController {
     }
 
     @GetMapping("subject/{id}")
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(readOnly = true)
     public ResponseEntity<List<SimpleStudentOutputDTO>> findSubjects(
             @PathVariable String id,
             @RequestParam(defaultValue = "simple", required = false) String outputType)

@@ -21,7 +21,7 @@ public class FindTeacherController {
     private FindTeacherPort findTeacherPort;
 
     @GetMapping("{id}")
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(readOnly = true)
     public ResponseEntity<SimpleTeacherOutputDTO> findById(
             @PathVariable String id,
             @RequestParam(defaultValue = "simple", required = false) String outputType)
@@ -31,7 +31,7 @@ public class FindTeacherController {
     }
 
     @GetMapping
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(readOnly = true)
     public ResponseEntity<List<SimpleTeacherOutputDTO>> findAll(
             @RequestParam(defaultValue = "simple", required = false) String outputType)
             throws Exception {
@@ -41,7 +41,7 @@ public class FindTeacherController {
     }
 
     @GetMapping("branch/{branch}")
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(readOnly = true)
     public ResponseEntity<List<SimpleTeacherOutputDTO>> findByBranch(
             @PathVariable String branch,
             @RequestParam(defaultValue = "simple", required = false) String outputType)

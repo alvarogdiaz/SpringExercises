@@ -1,5 +1,6 @@
 package com.bosonit.restservice.content.person.infrastructure.controller;
 
+import com.bosonit.restservice.content.feign.TeacherClient;
 import com.bosonit.restservice.content.person.infrastructure.controller.dto.output.PersonOutputDTO;
 import com.bosonit.restservice.content.person.infrastructure.repository.port.FindPersonPort;
 import com.bosonit.restservice.content.teacher.infrastructure.controller.dto.output.SimpleTeacherOutputDTO;
@@ -25,9 +26,10 @@ public class FindPersonController {
 
     private FindPersonPort findPersonPort;
     private Environment environment;
+    private TeacherClient teacherClient;
 
     @GetMapping("{id}")
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(readOnly = true)
     public ResponseEntity<PersonOutputDTO> findById(
             @PathVariable int id)
             throws Exception {
@@ -36,7 +38,7 @@ public class FindPersonController {
     }
 
     @GetMapping("name/{name}")
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(readOnly = true)
     public ResponseEntity<List<PersonOutputDTO>> findByName(
             @PathVariable String name)
             throws Exception {
@@ -46,7 +48,7 @@ public class FindPersonController {
     }
 
     @GetMapping("user/{user}")
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(readOnly = true)
     public ResponseEntity<List<PersonOutputDTO>> findByUser(
             @PathVariable String user)
             throws Exception {
@@ -56,7 +58,7 @@ public class FindPersonController {
     }
 
     @GetMapping
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(readOnly = true)
     public ResponseEntity<List<PersonOutputDTO>> findAll()
             throws Exception {
         return new ResponseEntity<>(findPersonPort.findAll().stream()
@@ -65,8 +67,9 @@ public class FindPersonController {
     }
 
     @GetMapping("teacher/{id}")
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(readOnly = true)
     public ResponseEntity<SimpleTeacherOutputDTO> getTeacher(@PathVariable String id) {
+        /* RESTTEMPLATE
         String port;
         if (environment.getProperty("server.port") == null)
             port = "8081";
@@ -76,6 +79,9 @@ public class FindPersonController {
         ResponseEntity<SimpleTeacherOutputDTO> tea = new RestTemplate().getForEntity("http://localhost:" + port + "/api/teacher/" + id,
                 SimpleTeacherOutputDTO.class);
 
-        return new ResponseEntity<>(tea.getBody(), HttpStatus.OK);
+        return new ResponseEntity<>(tea.getBody(), HttpStatus.OK);*/
+
+        SimpleTeacherOutputDTO teacher = teacherClient.find(id);
+        return ResponseEntity.ok().body(teacher);
     }
 }
