@@ -1,0 +1,18 @@
+spring:
+ datasource:
+  url: jdbc:postgresql://postgres:5432/postgres
+  driverClassName: org.postgresql.Driver
+  username: postgres
+  password: postgres
+ jpa:
+  show-sql: true
+  #generate-ddl: true
+  hibernate:
+   ddl-auto: create-drop
+  properties:
+   hibernate:
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+
+#spring.application.name: eureka-server
+#eureka.client.register-with-eureka: false
+#eureka.client.fetch-registry: false
