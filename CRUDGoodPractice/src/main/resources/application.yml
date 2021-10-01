@@ -17,6 +17,3 @@ spring:
     #format_sql: true
 hibernate:
  dialect: org.hibernate.dialect.HSQLDialect
-spring.application.name: eureka-server
-eureka.client.register-with-eureka: false
-eureka.client.fetch-registry: false

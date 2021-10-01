@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +64,16 @@ public class FindPersonController {
     public ResponseEntity<List<PersonOutputDTO>> findAll()
             throws Exception {
         return new ResponseEntity<>(findPersonPort.findAll().stream()
+                .map(PersonOutputDTO::new)
+                .collect(Collectors.toList()), HttpStatus.OK);
+    }
+
+    @GetMapping("data")
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<PersonOutputDTO>> getData(
+            @RequestParam HashMap<String, Object> cond)
+            throws Exception {
+        return new ResponseEntity<>(findPersonPort.getData(cond).stream()
                 .map(PersonOutputDTO::new)
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
