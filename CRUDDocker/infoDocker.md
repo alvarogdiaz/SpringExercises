@@ -5,7 +5,7 @@
 
 ### Postgres
 - docker volume create postgres-volume
-- docker run -d --name=postgres13 --net net -p 5432:5432 -v postgres-volume:/var/lib/postgresql/data -e POSTGRES_PASSWORD=[password] postgres
+- docker run -d --name=postgres --net net -p 5432:5432 -v postgres-volume:/var/lib/postgresql/data -e POSTGRES_PASSWORD=[password] postgres
 
 ### Spring
 - docker build -t spring .
