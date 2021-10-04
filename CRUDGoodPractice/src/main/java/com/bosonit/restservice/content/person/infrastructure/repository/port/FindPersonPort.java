@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface FindPersonPort {
-    List<Person> findAll() throws Exception;
+    List<Person> findAll(int num, int size) throws Exception;
     Person findById(int id) throws Exception;
-    List<Person> findByName(String name) throws Exception;
-    List<Person> findByUser(String user) throws Exception;
-    List<Person> getData(HashMap<String, Object> cond) throws Exception;
+    List<Person> findByName(String name, int num, int size) throws Exception;
+    List<Person> findByUser(String user, int num, int size) throws Exception;
+    List<Person> getData(HashMap<String, Object> cond, int num, int size) throws Exception;
 }

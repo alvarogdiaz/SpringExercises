@@ -42,9 +42,11 @@ public class FindPersonController {
     @GetMapping("name/{name}")
     @Transactional(readOnly = true)
     public ResponseEntity<List<PersonOutputDTO>> findByName(
-            @PathVariable String name)
+            @PathVariable String name,
+            @RequestParam int num,
+            @RequestParam(required = false, defaultValue = "10") int size)
             throws Exception {
-        return new ResponseEntity<>(findPersonPort.findByName(name).stream()
+        return new ResponseEntity<>(findPersonPort.findByName(name, num, size).stream()
                 .map(PersonOutputDTO::new)
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
@@ -52,18 +54,22 @@ public class FindPersonController {
     @GetMapping("user/{user}")
     @Transactional(readOnly = true)
     public ResponseEntity<List<PersonOutputDTO>> findByUser(
-            @PathVariable String user)
+            @PathVariable String user,
+            @RequestParam int num,
+            @RequestParam(required = false, defaultValue = "10") int size)
             throws Exception {
-        return new ResponseEntity<>(findPersonPort.findByUser(user).stream()
+        return new ResponseEntity<>(findPersonPort.findByUser(user, num, size).stream()
                 .map(PersonOutputDTO::new)
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
 
     @GetMapping
     @Transactional(readOnly = true)
-    public ResponseEntity<List<PersonOutputDTO>> findAll()
+    public ResponseEntity<List<PersonOutputDTO>> findAll(
+            @RequestParam int num,
+            @RequestParam(required = false, defaultValue = "10") int size)
             throws Exception {
-        return new ResponseEntity<>(findPersonPort.findAll().stream()
+        return new ResponseEntity<>(findPersonPort.findAll(num, size).stream()
                 .map(PersonOutputDTO::new)
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
@@ -71,9 +77,11 @@ public class FindPersonController {
     @GetMapping("data")
     @Transactional(readOnly = true)
     public ResponseEntity<List<PersonOutputDTO>> getData(
-            @RequestParam HashMap<String, Object> cond)
+            @RequestParam HashMap<String, Object> cond,
+            @RequestParam int num,
+            @RequestParam(required = false, defaultValue = "10") int size)
             throws Exception {
-        return new ResponseEntity<>(findPersonPort.getData(cond).stream()
+        return new ResponseEntity<>(findPersonPort.getData(cond, num, size).stream()
                 .map(PersonOutputDTO::new)
                 .collect(Collectors.toList()), HttpStatus.OK);
     }

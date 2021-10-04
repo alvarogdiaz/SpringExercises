@@ -6,10 +6,13 @@ import com.bosonit.restservice.content.person.infrastructure.repository.jpa.Pers
 import com.bosonit.restservice.content.person.infrastructure.repository.port.FindPersonPort;
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -31,8 +34,9 @@ public class FindPersonRepository implements FindPersonPort {
     private PersonRepositoryJpa personRepositoryJpa;
 
     @Override
-    public List<Person> findAll() throws Exception {
-        return personRepositoryJpa.findAll().stream()
+    public List<Person> findAll(int num, int size) throws Exception {
+        Pageable page = PageRequest.of(num, size);
+        return personRepositoryJpa.findAll(page).stream()
                 .map(Person::new)
                 .collect(Collectors.toList());
     }
@@ -46,21 +50,23 @@ public class FindPersonRepository implements FindPersonPort {
     }
 
     @Override
-    public List<Person> findByName(String name) throws Exception {
-        return personRepositoryJpa.findAllByName(name).stream()
+    public List<Person> findByName(String name, int num, int size) throws Exception {
+        Pageable page = PageRequest.of(num, size);
+        return personRepositoryJpa.findAllByName(name, page).stream()
                 .map(Person::new)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Person> findByUser(String user) throws Exception {
-        return personRepositoryJpa.findAllByUser(user).stream()
+    public List<Person> findByUser(String user, int num, int size) throws Exception {
+        Pageable page = PageRequest.of(num, size);
+        return personRepositoryJpa.findAllByUser(user, page).stream()
                 .map(Person::new)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Person> getData(HashMap<String, Object> cond) throws Exception {
+    public List<Person> getData(HashMap<String, Object> cond, int num, int size) throws Exception {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<PersonJpa> query = cb.createQuery(PersonJpa.class);
         Root<PersonJpa> root = query.from(PersonJpa.class);
@@ -101,7 +107,11 @@ public class FindPersonRepository implements FindPersonPort {
         }
 
         query.select(root).where(predicates.toArray(new Predicate[predicates.size()])).orderBy(orderList);
-        return entityManager.createQuery(query).getResultList().stream()
+        TypedQuery<PersonJpa> typedQuery = entityManager.createQuery(query)
+                .setFirstResult(num * size)
+                .setMaxResults(size);
+
+        return typedQuery.getResultList().stream()
                 .map(Person::new)
                 .collect(Collectors.toList());
     }
